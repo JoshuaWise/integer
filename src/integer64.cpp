@@ -337,8 +337,8 @@ private:
 		
 		uint64_t value = 0;
 		uint8_t max_digit = radix > 10 ? '9' : (radix - 1 + '0');
-		uint8_t max_alpha = radix > 10 ? (radix - 11 + 'a') : CHAR_MIN;
-		uint8_t min_alpha = radix > 10 ? 'a' : CHAR_MAX;
+		uint8_t max_alpha = radix > 10 ? (radix - 11 + 'a') : 0;
+		uint8_t min_alpha = radix > 10 ? 'a' : 255;
 		bool is_negative = (i + 1 < len) && (str[i] == '-') && !IsWhitespace(str[i + 1]);
 		int8_t sign = 1 - (is_negative * 2);
 		for (i+=is_negative; i<len; ++i) {
