@@ -42,6 +42,7 @@ public:
 		NODE_SET_PROTOTYPE_METHOD(t, "isNonZero", IsNonZero);
 		NODE_SET_PROTOTYPE_METHOD(t, "isSafe", IsSafe);
 		NODE_SET_PROTOTYPE_METHOD(t, "isUnsafe", IsUnsafe);
+		NODE_SET_PROTOTYPE_METHOD(t, "toNumberUnsafe", ToNumberUnsafe);
 		NODE_SET_PROTOTYPE_METHOD(t, "toString", ToString);
 		NODE_SET_PROTOTYPE_METHOD(t, "valueOf", ValueOf);
 		
@@ -266,6 +267,10 @@ private:
 	
 	NODE_METHOD(IsUnsafe) { UseValue;
 		Return(info, value > MAX_SAFE || value < MIN_SAFE);
+	}
+	
+	NODE_METHOD(ToNumberUnsafe) { UseValue;
+		Return(info, (double)value);
 	}
 	
 	NODE_METHOD(ToString) { UseValue;

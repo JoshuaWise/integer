@@ -41,3 +41,4 @@ alias('greaterThanOrEquals', ['gte', 'isGreaterThanOrEqualTo']);
 alias('lessThan', ['lt', 'isLessThan']);
 alias('lessThanOrEquals', ['lte', 'isLessThanOrEqualTo']);
 alias('isNonZero', ['isNotZero']);
+alias('valueOf', ['toNumber']);
