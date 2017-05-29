@@ -9,6 +9,7 @@ public:
 		
 		v8::Local<v8::FunctionTemplate> t = v8::FunctionTemplate::New(isolate, New);
 		t->InstanceTemplate()->SetInternalFieldCount(1);
+		t->PrototypeTemplate()->SetInternalFieldCount(1);
 		t->SetClassName(StringFromLatin1(isolate, "Integer64"));
 		
 		NODE_SET_PROTOTYPE_GETTER(t, "low", Low);
@@ -47,6 +48,7 @@ public:
 		NODE_SET_PROTOTYPE_METHOD(t, "valueOf", ValueOf);
 		
 		v8::Local<v8::Function> c = t->GetFunction(isolate->GetCurrentContext()).ToLocalChecked();
+		v8::Local<v8::Object>::Cast(c->Get(isolate->GetCurrentContext(), StringFromLatin1(isolate, "prototype")).ToLocalChecked())->SetAlignedPointerInInternalField(0, &controller);
 		exports->Set(StringFromLatin1(isolate, "Integer64"), c);
 		
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromString", FromString);
@@ -56,8 +58,8 @@ public:
 		
 		constructor.Reset(isolate, c);
 		constructorTemplate.Reset(isolate, t);
-		constructing_privileges = false;
-		constructing_value = 0;
+		controller.privileges = false;
+		controller.value = 0;
 	}
 	
 private:
@@ -65,11 +67,11 @@ private:
 	
 	NODE_METHOD(New) {
 		if (info.IsConstructCall()) {
-			if (!constructing_privileges) {
+			if (!controller.privileges) {
 				return ThrowTypeError(info, "Disabled constructor (use fromString, fromNumber, or fromBits)");
 			}
-			constructing_privileges = false;
-			(new Integer64(constructing_value))->Wrap(info.This());
+			controller.privileges = false;
+			(new Integer64(controller.value))->Wrap(info.This());
 			return info.GetReturnValue().Set(info.This());
 		}
 		if (info.Length() == 0) return ReturnNew(info, 0);
@@ -304,8 +306,8 @@ private:
 	
 	static inline void ReturnNew(NODE_ARGUMENTS info, int64_t value) {
 		v8::Isolate* isolate = info.GetIsolate();
-		constructing_privileges = true;
-		constructing_value = value;
+		controller.privileges = true;
+		controller.value = value;
 		info.GetReturnValue().Set(v8::Local<v8::Function>::New(isolate, constructor)->NewInstance(isolate->GetCurrentContext()).ToLocalChecked());
 	}
 	
@@ -380,6 +382,11 @@ private:
 		return reinterpret_cast<char*>(slot + sign);
 	}
 	
+	struct ConstructorController {
+		bool privileges;
+		int64_t value;
+	};
+	
 	static const int64_t MAX_VALUE = 0x7fffffffffffffffLL;
 	static const int64_t MIN_VALUE = -0x8000000000000000LL;
 	static const int64_t MAX_SAFE = 9007199254740991LL;
@@ -391,15 +398,13 @@ private:
 	static const size_t STRING_BUFFER_LENGTH = 72;
 	static v8::Persistent<v8::Function> constructor;
 	static v8::Persistent<v8::FunctionTemplate> constructorTemplate;
-	static bool constructing_privileges;
-	static int64_t constructing_value;
+	static ConstructorController controller;
 	
 	const int64_t value;
 };
 
 v8::Persistent<v8::Function> Integer64::constructor;
 v8::Persistent<v8::FunctionTemplate> Integer64::constructorTemplate;
-bool Integer64::constructing_privileges;
-int64_t Integer64::constructing_value;
+Integer64::ConstructorController Integer64::controller;
 
 NODE_MODULE(integer64, Integer64::Init);
