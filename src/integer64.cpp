@@ -46,7 +46,6 @@ public:
 		NODE_SET_PROTOTYPE_METHOD(t, "valueOf", ValueOf);
 		
 		v8::Local<v8::Function> c = t->GetFunction(isolate->GetCurrentContext()).ToLocalChecked();
-		v8::Local<v8::Value> p = t->InstanceTemplate()->NewInstance(isolate->GetCurrentContext()).ToLocalChecked()->GetPrototype();
 		exports->Set(StringFromLatin1(isolate, "Integer64"), c);
 		
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromString", FromString);
@@ -55,7 +54,7 @@ public:
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "isInteger64", IsInteger64);
 		
 		constructor.Reset(isolate, c);
-		prototype.Reset(isolate, p);
+		constructorTemplate.Reset(isolate, t);
 		constructing_privileges = false;
 		constructing_value = 0;
 	}
@@ -66,7 +65,7 @@ private:
 	NODE_METHOD(New) {
 		if (info.IsConstructCall()) {
 			if (!constructing_privileges) {
-				return ThrowTypeError(info, "Disabled constructor (use fromString, fromNumber, or fromBits instead)");
+				return ThrowTypeError(info, "Disabled constructor (use fromString, fromNumber, or fromBits)");
 			}
 			constructing_privileges = false;
 			(new Integer64(constructing_value))->Wrap(info.This());
@@ -111,7 +110,7 @@ private:
 	}
 	
 	NODE_METHOD(IsInteger64) {
-		Return(info, info.Length() != 0 && IsInstance(info, info[0]));
+		Return(info, info.Length() != 0 && HasInstance(info, info[0]));
 	}
 	
 	NODE_GETTER(Low) { UseValue;
@@ -159,8 +158,7 @@ private:
 	
 	NODE_METHOD(Modulo) { UseValue; UseArgument;
 		if (arg == 0) return ThrowRangeError(info, "Divide by zero");
-		if (arg == -1) return ReturnNew(info, 0);
-		ReturnNew(info, value % arg);
+		ReturnNew(info, arg == -1 ? 0 : value % arg);
 	}
 	
 	NODE_METHOD(Negate) { UseValue;
@@ -290,9 +288,8 @@ private:
 		ThrowRangeError(info, message.c_str());
 	}
 	
-	static inline bool IsInstance(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
-		return value->IsObject() && v8::Local<v8::Object>::Cast(value)->GetPrototype()
-			->StrictEquals(v8::Local<v8::Value>::New(info.GetIsolate(), prototype));
+	static inline bool HasInstance(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
+		return v8::Local<v8::FunctionTemplate>::New(info.GetIsolate(), constructorTemplate)->HasInstance(value);
 	}
 	
 	static inline void Return(NODE_GETTER_ARGUMENTS info, int32_t value) {info.GetReturnValue().Set(value);}
@@ -311,7 +308,7 @@ private:
 	static Result Cast(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
 		if (value->IsNumber()) return Cast(v8::Local<v8::Number>::Cast(value));
 		if (value->IsString()) return Cast(v8::Local<v8::String>::Cast(value), 10);
-		if (IsInstance(info, value)) return Result(node::ObjectWrap::Unwrap<Integer64>(v8::Local<v8::Object>::Cast(value))->value);
+		if (HasInstance(info, value)) return Result(node::ObjectWrap::Unwrap<Integer64>(v8::Local<v8::Object>::Cast(value))->value);
 		return Result("Expected a number, string, or Integer64");
 	}
 	
@@ -359,8 +356,8 @@ private:
 		// Skip trailing whitespace.
 		while (i<len && IsWhitespace(str[i])) {++i;}
 		
-		if (i != len) return Result("The given string contains non-numeric characters");
-		if (value > I64_in_U64) return Result("The given string represents a number that is too large", true);
+		if (i != len) return Result("The given string contains non-integer characters");
+		if (value > I64_in_U64 + is_negative) return Result("The given string represents a number that is too large", true);
 		return Result(((int64_t)value) * sign);
 	}
 	
@@ -389,11 +386,16 @@ private:
 	static constexpr uint64_t U32_in_U64 = (uint64_t)0xffffffffLU;
 	static const size_t STRING_BUFFER_LENGTH = 72;
 	static v8::Persistent<v8::Function> constructor;
-	static v8::Persistent<v8::Value> prototype;
+	static v8::Persistent<v8::FunctionTemplate> constructorTemplate;
 	static bool constructing_privileges;
 	static int64_t constructing_value;
 	
 	const int64_t value;
 };
+
+v8::Persistent<v8::Function> Integer64::constructor;
+v8::Persistent<v8::FunctionTemplate> Integer64::constructorTemplate;
+bool Integer64::constructing_privileges;
+int64_t Integer64::constructing_value;
 
 NODE_MODULE(integer64, Integer64::Init);

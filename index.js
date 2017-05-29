@@ -4,14 +4,14 @@ var Integer64 = module.exports = require('bindings')({
 }).Integer64;
 
 
-defineFrozen(Int64, 'MAX_VALUE', new Int64(-1, 0x7fffffff));
-defineFrozen(Int64, 'MIN_VALUE', new Int64(0, -0x80000000));
-defineFrozen(Int64, 'ZERO', new Int64(0, 0));
-defineFrozen(Int64, 'ONE', new Int64(1, 0));
-defineFrozen(Int64, 'NEG_ONE', new Int64(-1, -1));
+defineStatic('MAX_VALUE', Integer64.fromBits(-1, 0x7fffffff));
+defineStatic('MIN_VALUE', Integer64.fromBits(0, -0x80000000));
+defineStatic('ZERO', Integer64.fromBits(0, 0));
+defineStatic('ONE', Integer64.fromBits(1, 0));
+defineStatic('NEG_ONE', Integer64.fromBits(-1, -1));
 
-function defineFrozen(obj, key, value) {
-	Object.defineProperty(obj, key, {
+function defineStatic(key, value) {
+	Object.defineProperty(Integer64, key, {
 		writable: false,
 		enumerable: true,
 		configurable: false,
