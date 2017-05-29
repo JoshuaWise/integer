@@ -11,10 +11,6 @@ public:
 		t->InstanceTemplate()->SetInternalFieldCount(1);
 		t->SetClassName(StringFromLatin1(isolate, "Integer64"));
 		
-		NODE_SET_METHOD(t, "fromString", FromString);
-		NODE_SET_METHOD(t, "fromNumber", FromNumber);
-		NODE_SET_METHOD(t, "fromBits", FromBits);
-		NODE_SET_METHOD(t, "isInteger64", IsInteger64);
 		NODE_SET_PROTOTYPE_GETTER(t, "low", Low);
 		NODE_SET_PROTOTYPE_GETTER(t, "high", High);
 		NODE_SET_PROTOTYPE_METHOD(t, "add", Add);
@@ -50,8 +46,13 @@ public:
 		NODE_SET_PROTOTYPE_METHOD(t, "valueOf", ValueOf);
 		
 		v8::Local<v8::Function> c = t->GetFunction(isolate->GetCurrentContext()).ToLocalChecked();
-		exports->Set(StringFromLatin1(isolate, "Integer64"), c);
 		v8::Local<v8::Value> p = t->InstanceTemplate()->NewInstance(isolate->GetCurrentContext()).ToLocalChecked()->GetPrototype();
+		exports->Set(StringFromLatin1(isolate, "Integer64"), c);
+		
+		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromString", FromString);
+		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromNumber", FromNumber);
+		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromBits", FromBits);
+		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "isInteger64", IsInteger64);
 		
 		constructor.Reset(isolate, c);
 		prototype.Reset(isolate, p);
@@ -65,7 +66,7 @@ private:
 	NODE_METHOD(New) {
 		if (info.IsConstructCall()) {
 			if (!constructing_privileges) {
-				return ThrowException(info, "Disabled constructor (use fromString, fromNumber, or fromBits instead)");
+				return ThrowTypeError(info, "Disabled constructor (use fromString, fromNumber, or fromBits instead)");
 			}
 			constructing_privileges = false;
 			(new Integer64(constructing_value))->Wrap(info.This());
@@ -91,7 +92,7 @@ private:
 		if (info.Length() == 1) return ThrowException(info, *cast.error);
 		Result def = Cast(info, info[1]);
 		if (!def.error) return ReturnNew(info, def.Checked());
-		ThrowException(info, "The default value could not be converted to an Integer64");
+		ThrowTypeError(info, "The default value could not be converted to an Integer64");
 	}
 	
 	NODE_METHOD(FromString) {
@@ -106,7 +107,7 @@ private:
 		if (info.Length() < 3) return ThrowException(info, *cast.error);
 		Result def = Cast(info, info[2]);
 		if (!def.error) return ReturnNew(info, def.Checked());
-		ThrowException(info, "The default value could not be converted to an Integer64");
+		ThrowTypeError(info, "The default value could not be converted to an Integer64");
 	}
 	
 	NODE_METHOD(IsInteger64) {
@@ -121,19 +122,19 @@ private:
 		Return(info, (int32_t)((uint32_t)(((uint64_t)value) >> 32)));
 	}
 	
-	NODE_METHOD(Add) { USE_VALUE(); USE_ARGUMENT();
+	NODE_METHOD(Add) { UseValue; UseArgument;
 		if ((arg > 0 && value > MAX_VALUE - arg) || (arg < 0 && value < MIN_VALUE - arg))
 			return ThrowRangeError(info, "Integer overflow");
-		RESULT(value + arg);
+		ReturnNew(info, value + arg);
 	}
 	
-	NODE_METHOD(Subtract) { USE_VALUE(); USE_ARGUMENT();
+	NODE_METHOD(Subtract) { UseValue; UseArgument;
 		if ((arg < 0 && value > MAX_VALUE + arg) || (arg > 0 && value < MIN_VALUE + arg))
 			return ThrowRangeError(info, "Integer overflow");
-		RESULT(value - arg);
+		ReturnNew(info, value - arg);
 	}
 	
-	NODE_METHOD(Multiply) { USE_VALUE(); USE_ARGUMENT();
+	NODE_METHOD(Multiply) { UseValue; UseArgument;
 		if (value > 0) {
 			if (arg > 0) {
 				if (value > MAX_VALUE / arg) return ThrowRangeError(info, "Integer overflow");
@@ -147,141 +148,146 @@ private:
 				if (value != 0 && arg < MAX_VALUE / value) return ThrowRangeError(info, "Integer overflow");
 			}
 		}
-		RESULT(value * arg);
+		ReturnNew(info, value * arg);
 	}
 	
-	NODE_METHOD(Divide) { USE_VALUE(); USE_ARGUMENT();
+	NODE_METHOD(Divide) { UseValue; UseArgument;
 		if (arg == 0) return ThrowRangeError(info, "Divide by zero");
 		if (arg == -1 && value == MIN_VALUE) return ThrowRangeError(info, "Integer overflow");
-		RESULT(value / arg);
+		ReturnNew(info, value / arg);
 	}
 	
-	NODE_METHOD(Modulo) { USE_VALUE(); USE_ARGUMENT();
+	NODE_METHOD(Modulo) { UseValue; UseArgument;
 		if (arg == 0) return ThrowRangeError(info, "Divide by zero");
-		if (arg == -1) RESULT(0);
-		RESULT(value % arg);
+		if (arg == -1) return ReturnNew(info, 0);
+		ReturnNew(info, value % arg);
 	}
 	
-	NODE_METHOD(Negate) { USE_VALUE();
+	NODE_METHOD(Negate) { UseValue;
 		if (value == MIN_VALUE) return ThrowRangeError(info, "Integer overflow");
-		RESULT(-value);
+		ReturnNew(info, -value);
 	}
 	
-	NODE_METHOD(Abs) { USE_VALUE();
-		if (value >= 0) return RESULT(value);
+	NODE_METHOD(Abs) { UseValue;
+		if (value >= 0) return ReturnNew(info, value);
 		if (value == MIN_VALUE) return ThrowRangeError(info, "Integer overflow");
-		RESULT(-value);
+		ReturnNew(info, -value);
 	}
 	
-	NODE_METHOD(And) { USE_VALUE(); USE_ARGUMENT();
-		RESULT(value & arg);
+	NODE_METHOD(And) { UseValue; UseArgument;
+		ReturnNew(info, value & arg);
 	}
 	
-	NODE_METHOD(Or) { USE_VALUE(); USE_ARGUMENT();
-		RESULT(value | arg);
+	NODE_METHOD(Or) { UseValue; UseArgument;
+		ReturnNew(info, value | arg);
 	}
 	
-	NODE_METHOD(Xor) { USE_VALUE(); USE_ARGUMENT();
-		RESULT(value ^ arg);
+	NODE_METHOD(Xor) { UseValue; UseArgument;
+		ReturnNew(info, value ^ arg);
 	}
 	
-	NODE_METHOD(Not) { USE_VALUE();
-		RESULT(~value);
+	NODE_METHOD(Not) { UseValue;
+		ReturnNew(info, ~value);
 	}
 	
-	NODE_METHOD(ShiftLeft) { USE_VALUE();
+	NODE_METHOD(ShiftLeft) { UseValue;
 		REQUIRE_ARGUMENT_UINT32(first, uint32_t shift);
-		RESULT((int64_t)((uint64_t)value << (shift & 63)));
+		ReturnNew(info, (int64_t)((uint64_t)value << (shift & 63)));
 	}
 	
-	NODE_METHOD(ShiftRight) { USE_VALUE();
+	NODE_METHOD(ShiftRight) { UseValue;
 		REQUIRE_ARGUMENT_UINT32(first, uint32_t shift);
-		RESULT(value >> (shift & 63));
+		ReturnNew(info, value >> (shift & 63));
 	}
 	
-	NODE_METHOD(Equals) { USE_VALUE(); USE_ARGUMENT();
-		info.GetReturnValue().Set(value == arg);
+	NODE_METHOD(Equals) { UseValue; UseArgument;
+		Return(info, value == arg);
 	}
 	
-	NODE_METHOD(NotEquals) { USE_VALUE(); USE_ARGUMENT();
-		info.GetReturnValue().Set(value != arg);
+	NODE_METHOD(NotEquals) { UseValue; UseArgument;
+		Return(info, value != arg);
 	}
 	
-	NODE_METHOD(GreaterThan) { USE_VALUE(); USE_ARGUMENT();
-		info.GetReturnValue().Set(value > arg);
+	NODE_METHOD(GreaterThan) { UseValue; UseArgument;
+		Return(info, value > arg);
 	}
 	
-	NODE_METHOD(GreaterThanOrEquals) { USE_VALUE(); USE_ARGUMENT();
-		info.GetReturnValue().Set(value >= arg);
+	NODE_METHOD(GreaterThanOrEquals) { UseValue; UseArgument;
+		Return(info, value >= arg);
 	}
 	
-	NODE_METHOD(LessThan) { USE_VALUE(); USE_ARGUMENT();
-		info.GetReturnValue().Set(value < arg);
+	NODE_METHOD(LessThan) { UseValue; UseArgument;
+		Return(info, value < arg);
 	}
 	
-	NODE_METHOD(LessThanOrEquals) { USE_VALUE(); USE_ARGUMENT();
-		info.GetReturnValue().Set(value <= arg);
+	NODE_METHOD(LessThanOrEquals) { UseValue; UseArgument;
+		Return(info, value <= arg);
 	}
 	
-	NODE_METHOD(Compare) { USE_VALUE(); USE_ARGUMENT();
-		info.GetReturnValue().Set(value < arg ? -1 : value > arg ? 1 : 0);
+	NODE_METHOD(Compare) { UseValue; UseArgument;
+		Return(info, value < arg ? -1 : value > arg ? 1 : 0);
 	}
 	
-	NODE_METHOD(BitSizeAbs) { USE_VALUE();
+	NODE_METHOD(BitSizeAbs) { UseValue;
 		if (value < 0) {
-			if (value == MIN_VALUE) return info.GetReturnValue().Set((uint32_t)64);
+			if (value == MIN_VALUE) return Return(info, (uint32_t)64);
 			value = -value;
 		}
 		uint64_t uvalue = (uint64_t)value;
 		uint32_t bits = 1;
 		while (uvalue >>= 1) {++bits;}
-		info.GetReturnValue().Set(bits);
+		Return(info, bits);
 	}
 	
-	NODE_METHOD(IsEven) { USE_VALUE();
-		info.GetReturnValue().Set(value & 1 == 0);
+	NODE_METHOD(IsEven) { UseValue;
+		Return(info, (value & 1) == 0);
 	}
 	
-	NODE_METHOD(IsOdd) { USE_VALUE();
-		info.GetReturnValue().Set(value & 1 != 0);
+	NODE_METHOD(IsOdd) { UseValue;
+		Return(info, (value & 1) != 0);
 	}
 	
-	NODE_METHOD(IsPositive) { USE_VALUE();
-		info.GetReturnValue().Set(value >= 0);
+	NODE_METHOD(IsPositive) { UseValue;
+		Return(info, value >= 0);
 	}
 	
-	NODE_METHOD(IsNegative) { USE_VALUE();
-		info.GetReturnValue().Set(value < 0);
+	NODE_METHOD(IsNegative) { UseValue;
+		Return(info, value < 0);
 	}
 	
-	NODE_METHOD(IsZero) { USE_VALUE();
-		info.GetReturnValue().Set(value == 0);
+	NODE_METHOD(IsZero) { UseValue;
+		Return(info, value == 0);
 	}
 	
-	NODE_METHOD(IsNonZero) { USE_VALUE();
-		info.GetReturnValue().Set(value != 0);
+	NODE_METHOD(IsNonZero) { UseValue;
+		Return(info, value != 0);
 	}
 	
-	NODE_METHOD(IsSafe) { USE_VALUE();
-		info.GetReturnValue().Set(value <= MAX_SAFE && value >= MIN_SAFE);
+	NODE_METHOD(IsSafe) { UseValue;
+		Return(info, value <= MAX_SAFE && value >= MIN_SAFE);
 	}
 	
-	NODE_METHOD(IsUnsafe) { USE_VALUE();
-		info.GetReturnValue().Set(value > MAX_SAFE || value < MIN_SAFE);
+	NODE_METHOD(IsUnsafe) { UseValue;
+		Return(info, value > MAX_SAFE || value < MIN_SAFE);
 	}
 	
-	NODE_METHOD(ToString) { USE_VALUE();
-		std::string string = std::to_string((long long)value);
-		info.GetReturnValue().Set(StringFromLatin1(OnlyIsolate, string.c_str(), string.length()));
-	}
-	
-	NODE_METHOD(ValueOf) { USE_VALUE();
-		if (value > MAX_SAFE || value < MIN_SAFE) {
-			std::string string = std::to_string((long long)value);
-			std::string message = CONCAT("Cannot losslessly convert ", string.c_str(), " to a number");
-			return ThrowRangeError(info, message.c_str());
+	NODE_METHOD(ToString) { UseValue;
+		uint32_t radix = 10;
+		if (info.Length()) {
+			REQUIRE_ARGUMENT_UINT32(first, radix);
+			if (radix < 2 || radix > 36) return ThrowRangeError(info, "Radix argument must be within 2 - 36");
 		}
-		info.GetReturnValue().Set((double)value);
+		char buffer[STRING_BUFFER_LENGTH];
+		info.GetReturnValue().Set(StringFromLatin1(info.GetIsolate(), WriteString(buffer, value, (uint8_t)radix)));
+	}
+	
+	NODE_METHOD(ValueOf) { UseValue;
+		if (value <= MAX_SAFE && value >= MIN_SAFE) return Return(info, (double)value);
+		char buffer[STRING_BUFFER_LENGTH];
+		std::string message = "Cannot losslessly convert ";
+		message += WriteString(buffer, value, 10);
+		message += " to a number";
+		ThrowRangeError(info, message.c_str());
 	}
 	
 	static inline bool IsInstance(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
@@ -289,8 +295,11 @@ private:
 			->StrictEquals(v8::Local<v8::Value>::New(info.GetIsolate(), prototype));
 	}
 	
-	static inline void Return(NODE_ARGUMENTS info, bool value) {info.GetReturnValue().Set(value);}
+	static inline void Return(NODE_GETTER_ARGUMENTS info, int32_t value) {info.GetReturnValue().Set(value);}
 	static inline void Return(NODE_ARGUMENTS info, int32_t value) {info.GetReturnValue().Set(value);}
+	static inline void Return(NODE_ARGUMENTS info, uint32_t value) {info.GetReturnValue().Set(value);}
+	static inline void Return(NODE_ARGUMENTS info, double value) {info.GetReturnValue().Set(value);}
+	static inline void Return(NODE_ARGUMENTS info, bool value) {info.GetReturnValue().Set(value);}
 	
 	static inline void ReturnNew(NODE_ARGUMENTS info, int64_t value) {
 		v8::Isolate* isolate = info.GetIsolate();
@@ -302,7 +311,7 @@ private:
 	static Result Cast(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
 		if (value->IsNumber()) return Cast(v8::Local<v8::Number>::Cast(value));
 		if (value->IsString()) return Cast(v8::Local<v8::String>::Cast(value), 10);
-		if (IsInstance(info, value)) return node::ObjectWrap::Unwrap<Int64>(value)->value;
+		if (IsInstance(info, value)) return Result(node::ObjectWrap::Unwrap<Integer64>(v8::Local<v8::Object>::Cast(value))->value);
 		return Result("Expected a number, string, or Integer64");
 	}
 	
@@ -310,11 +319,11 @@ private:
 		double value = number->Value();
 		if (!isfinite(value) || floor(value) != value) return Result("The given number is not an integer");
 		if (value > MAX_SAFE_DOUBLE || value < MIN_SAFE_DOUBLE) return Result("The precision of the given number cannot be guaranteed", true);
-		return (int64_t)value;
+		return Result((int64_t)value);
 	}
 	
 	static Result Cast(v8::Local<v8::String> string, uint8_t radix) {
-		auto IsWhitespace = [](uint16_t c) {return c == ' ' || (c <= '\r' && c >= '\t');}
+		auto IsWhitespace = [](uint16_t c) {return c == ' ' || (c <= '\r' && c >= '\t');};
 		
 		v8::String::Value utf16(string);
 		const uint16_t* str = *utf16;
@@ -352,17 +361,33 @@ private:
 		
 		if (i != len) return Result("The given string contains non-numeric characters");
 		if (value > I64_in_U64) return Result("The given string represents a number that is too large", true);
-		return ((int64_t)value) * sign;
+		return Result(((int64_t)value) * sign);
+	}
+	
+	static char* WriteString(char* buffer, int64_t value, uint8_t radix) {
+		int32_t sign = -(value < 0);
+		uint64_t x = (value ^ sign) - sign;
+		unsigned char* slot = reinterpret_cast<unsigned char*>(buffer + STRING_BUFFER_LENGTH - 1);
+		*slot = '\0';
+		
+		do {
+			uint64_t digit = x % radix;
+			*(--slot) = digit + '0' + (digit > 9) * 39;
+		} while (x /= radix);
+		
+		*(slot - 1) = '-';
+		return reinterpret_cast<char*>(slot + sign);
 	}
 	
 	static const int64_t MAX_VALUE = 0x7fffffffffffffffLL;
 	static const int64_t MIN_VALUE = -0x8000000000000000LL;
 	static const int64_t MAX_SAFE = 9007199254740991LL;
 	static const int64_t MIN_SAFE = -9007199254740991LL;
-	static const double MAX_SAFE_DOUBLE = (double)MAX_SAFE;
-	static const double MIN_SAFE_DOUBLE = (double)MIN_SAFE;
-	static const uint64_t I64_in_U64 = (uint64_t)MAX_VALUE;
-	static const uint64_t U32_in_U64 = (uint64_t)0xffffffffLU;
+	static constexpr double MAX_SAFE_DOUBLE = (double)MAX_SAFE;
+	static constexpr double MIN_SAFE_DOUBLE = (double)MIN_SAFE;
+	static constexpr uint64_t I64_in_U64 = (uint64_t)MAX_VALUE;
+	static constexpr uint64_t U32_in_U64 = (uint64_t)0xffffffffLU;
+	static const size_t STRING_BUFFER_LENGTH = 72;
 	static v8::Persistent<v8::Function> constructor;
 	static v8::Persistent<v8::Value> prototype;
 	static bool constructing_privileges;
