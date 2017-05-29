@@ -167,9 +167,8 @@ private:
 	}
 	
 	NODE_METHOD(Abs) { UseValue;
-		if (value >= 0) return ReturnNew(info, value);
 		if (value == MIN_VALUE) return ThrowRangeError(info, "Integer overflow");
-		ReturnNew(info, -value);
+		ReturnNew(info, value >= 0 ? value : -value);
 	}
 	
 	NODE_METHOD(And) { UseValue; UseArgument;
