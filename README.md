@@ -121,40 +121,40 @@ int.toString(16); // => '2000000040'
 
 Performs the arithmetic operation and returns a new `integer64`. The argument must either be a number, a base-10 string, or an `integer64`. If the operation results in overflow, a `RangeError` is thrown.
 
-#### .negate/neg() -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.negate/neg() -> *integer64*
 
 Returns the unary negation (`-num`) of the `integer64`.
 
-#### .abs/absoluteValue() -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.abs/absoluteValue() -> *integer64*
 
 Returns the absolute value of the `integer64`.
 
 ### Bitwise operations
 
-#### .and(*value*) -> *integer64*
-#### .or(*value*) -> *integer64*
-#### .xor(*value*) -> *integer64*
-#### .not() -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.and(*value*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.or(*value*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.xor(*value*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.not() -> *integer64*
 
 Performs the bitwise operation and returns a new `integer64`. The argument must either be a number, a base-10 string, or an `integer64`.
 
-#### .shiftLeft/shl(*numberOfBits*) -> *integer64*
-#### .shiftRight/shr(*numberOfBits*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.shiftLeft/shl(*numberOfBits*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.shiftRight/shr(*numberOfBits*) -> *integer64*
 
 Shifts the `integer64` by specified number of bits and returns the result.
 
 ### Logical operations
 
-#### .equals/eq/isEqualTo(*value*) -> *boolean*
-#### .notEquals/neq/isNotEqualTo/doesNotEqual(*value*) -> *boolean*
-#### .greaterThan/gt/isGreaterThan(*value*) -> *boolean*
-#### .lessThan/lt/isLessThan(*value*) -> *boolean*
-#### .greaterThanOrEquals/gte/isGreaterThanOrEqualTo(*value*) -> *boolean*
-#### .lessThanOrEquals/lte/isLessThanOrEqualTo(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.equals/eq/isEqualTo(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.notEquals/neq/isNotEqualTo/doesNotEqual(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.greaterThan/gt/isGreaterThan(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.lessThan/lt/isLessThan(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.greaterThanOrEquals/gte/isGreaterThanOrEqualTo(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.lessThanOrEquals/lte/isLessThanOrEqualTo(*value*) -> *boolean*
 
 Performs the logical operation and returns `true` or `false`. The argument must either be a number, a base-10 string, or an `integer64`.
 
-#### .compare(*arg*) -> *number*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.compare(*arg*) -> *number*
 
 Compares the value of the `integer64` and the argument, resulting in:
 - `-1` if `this` is less than `arg`
@@ -163,7 +163,7 @@ Compares the value of the `integer64` and the argument, resulting in:
 
 ### Other utility
 
-#### .bitSizeAbs() -> *number*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.bitSizeAbs() -> *number*
 
 Returns the number of bits necessary to hold the absolute value of the `integer64`.
 
@@ -174,40 +174,40 @@ Int(-255).bitSizeAbs(); // => 8
 Int.fromString('4fffffffffff', 16).bitSizeAbs(); // => 47
 ```
 
-#### .isEven() -> *boolean*
-#### .isOdd() -> *boolean*
-#### .isPositive() -> *boolean*
-#### .isNegative() -> *boolean*
-#### .isZero() -> *boolean*
-#### .isNonZero/isNotZero() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isEven() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isOdd() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isPositive() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isNegative() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isZero() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isNonZero/isNotZero() -> *boolean*
 
 Self-explanatory information about the `integer64's` value.
 
-#### .isSafe() -> *boolean*
-#### .isUnsafe() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isSafe() -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.isUnsafe() -> *boolean*
 
 Returns whether or not the `integer64` is within the safe range. If it's not within the safe range, trying to convert it to a regular number would result in a `RangeError` being thrown.
 
 The safe range is defined as `n >= Number.MIN_SAFE_INTEGER && n <= Number.MAX_SAFE_INTEGER`.
 
-#### .valueOf/toNumber() -> *number*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
 
 Converts the `integer64` to a regular number. If the `integer64` is not within the safe range, a `RangeError` is thrown.
 
-#### .toString([*radix*]) -> *string*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.toString([*radix*]) -> *string*
 
 Converts the `integer64` to a string. A base-10 string is returned unless a different `radix` is specified.
 
-#### .toNumberUnsafe() -> *number*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
 
 Converts the `integer64` to a regular number, even if the conversion would result in a loss of precision. This method will never throw an error.
 
-#### *get* .low -> *number*
-#### *get* .high -> *number*
+#### &nbsp;&nbsp;&nbsp;&nbsp;*get* .low -> *number*
+#### &nbsp;&nbsp;&nbsp;&nbsp;*get* .high -> *number*
 
 Returns the low or high 32-bits of the 64-bit integer.
 
-#### Integer64.isInteger64(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;Integer64.isInteger64(*value*) -> *boolean*
 
 Determines if the given value is an `integer64`.
 
