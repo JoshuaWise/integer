@@ -1,8 +1,6 @@
 # integer64 [![Build Status](https://img.shields.io/travis/JoshuaWise/integer64.svg)](https://travis-ci.org/JoshuaWise/integer64)
 
-Actual 64-bit (signed) integers in JavaScript.
-
-Including the following features:
+64-bit signed integers the following features:
 - All standard operators (arithmetic, bitwise, logical)
 - Automatic protection from integer overflow
 - Automatic protection from converting to/from unsafe numbers
