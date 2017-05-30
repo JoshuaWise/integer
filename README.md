@@ -28,7 +28,7 @@ if (b.equals('891229664017478398')) {
 
 ## Overflow protection
 
-`integer64` will not let you perform operations that would result in integer overflow. If you try to create an integer that cannot be represented in 64-bits (signed), it will throw a `RangeError`.
+I will not let you perform operations that would result in integer overflow. If you try to create an integer that cannot be represented in 64-bits (signed), I will throw a `RangeError`.
 
 ```js
 // These will each throw a RangeError
@@ -37,13 +37,13 @@ var tooSmall = Int.MIN_VALUE.subtract(1);
 var divideByZero = Int(123).divide(0);
 var alsoTooBig = Int('4029384203948203948923');
 
-// It also protects against two's complement overflow, causing this to throw a RangeError
+// I will also protect you against two's complement overflow, causing this to throw a RangeError
 var twosComplement = Int.MIN_VALUE.divide(-1);
 ```
 
 ## Unsafe number protection
 
-It's easy to convert between `integer64s` and regular JavaScript numbers.
+It's easy to convert between me and regular JavaScript numbers.
 
 ```js
 var int = Int(12345);
@@ -53,7 +53,7 @@ var num = +int; // same as int.toNumber()
 typeof num === 'number'; // => true
 ```
 
-However, this library will prevent you from converting an `integer64` to an unsafe number, and vice-versa.
+However, I will prevent you from converting an `integer64` to an unsafe number, and vice-versa.
 
 ```js
 // This will throw a RangeError
