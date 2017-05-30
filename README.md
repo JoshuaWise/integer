@@ -181,7 +181,7 @@ Int.fromString('4fffffffffff', 16).bitSizeAbs(); // => 47
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isZero() -> *boolean*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isNonZero/isNotZero() -> *boolean*
 
-Self-explanatory.
+These methods are self-explanatory.
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isSafe() -> *boolean*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isUnsafe() -> *boolean*
