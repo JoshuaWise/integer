@@ -87,8 +87,8 @@ Casts a regular number to an `integer64`.
 If the number is an unsafe number the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
-var a = Int.fromNumber(12345, 0); // results in Int(12345)
-var b = Int.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0); // results in Int(0)
+Int.fromNumber(12345, 0); // results in Int(12345)
+Int.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0); // results in Int(0)
 ```
 
 ### Integer64.fromString(*string*, [*radix*, [*defaultValue*]]) -> *integer64*
