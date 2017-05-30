@@ -326,7 +326,7 @@ private:
 	
 	static Result Cast(v8::Local<v8::Number> number) {
 		double value = number->Value();
-		if (!isfinite(value) || floor(value) != value) return Result("The given number is not an integer");
+		if (!std::isfinite(value) || std::floor(value) != value) return Result("The given number is not an integer");
 		if (value > MAX_SAFE_DOUBLE || value < MIN_SAFE_DOUBLE) return Result("The precision of the given number cannot be guaranteed", true);
 		return Result((int64_t)value);
 	}
