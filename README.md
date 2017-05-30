@@ -53,7 +53,7 @@ var num = +int; // same as int.toNumber()
 typeof num === 'number'; // => true
 ```
 
-However, I will prevent you from converting an `integer64` to an unsafe number, and vice-versa.
+However, we will prevent you from converting an `integer64` to an unsafe number, and vice-versa.
 
 ```js
 // This will throw a RangeError
