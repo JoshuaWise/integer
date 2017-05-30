@@ -200,7 +200,7 @@ Converts the `integer64` to a string. A base-10 string is returned unless a diff
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
 
-Converts the `integer64` to a regular number, even if the conversion would result in a loss of precision. This method will never throw an error.
+Converts the `integer64` to a regular number, **even if the conversion would result in a loss of precision**. This method will never throw an error.
 
 #### *get* .low -> *number*
 #### *get* .high -> *number*
