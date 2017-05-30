@@ -9,7 +9,7 @@ inline v8::Local<v8::String> StringFromLatin1(v8::Isolate* isolate, const char* 
 
 void ThrowException(NODE_ARGUMENTS info, Error error) {
 	v8::Isolate* isolate = info.GetIsolate();
-	isolate->ThrowException(v8::Local<v8::Object>::Cast(error.Type(StringFromLatin1(isolate, error.message))));
+	isolate->ThrowException(error.Type(StringFromLatin1(isolate, error.message)));
 }
 void ThrowTypeError(NODE_ARGUMENTS info, const char* message) {ThrowException(info, Error(message, false));}
 void ThrowRangeError(NODE_ARGUMENTS info, const char* message) {ThrowException(info, Error(message, true));}
