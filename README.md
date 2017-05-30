@@ -111,15 +111,6 @@ var int = Int.frombits(0x40, 0x20);
 int.toString(16); // => '2000000040'
 ```
 
-#### Integer64.isInteger64(*value*) -> *boolean*
-
-Determines if the given value is an `integer64`.
-
-#### *get* .low -> *number*
-#### *get* .high -> *number*
-
-Returns the low or high 32-bits of the 64-bit integer.
-
 #### .add/plus(*value*) -> *integer64*
 #### .subtract/sub/minus(*value*) -> *integer64*
 #### .multiply/mul/times(*value*) -> *integer64*
@@ -202,6 +193,15 @@ Converts the `integer64` to a string. A base-10 string is returned unless a diff
 #### .toNumberUnsafe() -> *number*
 
 Converts the `integer64` to a regular number, even if the conversion would result in a loss of precision. This method will never throw an error.
+
+### Integer64.isInteger64(*value*) -> *boolean*
+
+Determines if the given value is an `integer64`.
+
+### *get* .low -> *number*
+### *get* .high -> *number*
+
+Returns the low or high 32-bits of the 64-bit integer.
 
 ## License
 
