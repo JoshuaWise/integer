@@ -47,10 +47,10 @@ It's easy to convert between me and regular JavaScript numbers.
 
 ```js
 var int = Int(12345);
-int instanceof Int; // => true
+assert(int instanceof Int);
 
 var num = +int; // same as int.toNumber()
-typeof num === 'number'; // => true
+assert(typeof num === 'number');
 ```
 
 However, we will prevent you from converting an `integer64` to an unsafe number, and vice-versa.
@@ -76,8 +76,8 @@ Casts a value to an `integer64`. If the value cannot be converted safely and los
 var a = Int();
 var b = Int(12345);
 var c = Int('12345');
-a.equals(0); // => true
-b.equals(c); // => true
+assert(a.equals(0));
+assert(b.equals(c));
 ```
 
 ### *static* Integer64.fromNumber(*number*, [*defaultValue*]) -> *integer64*
