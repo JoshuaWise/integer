@@ -1,6 +1,6 @@
 # integer64 [![Build Status](https://img.shields.io/travis/JoshuaWise/integer64.svg)](https://travis-ci.org/JoshuaWise/integer64)
 
-64-bit signed integers in JavaScript.
+64-bit signed integers in Nodejs.
 
 - All standard operators (arithmetic, bitwise, logical)
 - Automatic protection from integer overflow
