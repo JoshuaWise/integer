@@ -28,7 +28,7 @@ if (b.equals('891229664017478398')) {
 
 ## Overflow protection
 
-I will not let you perform operations that would result in integer overflow. If you try to create an integer that cannot be represented in 64-bits (signed), I will throw a `RangeError`.
+We will not let you perform operations that would result in integer overflow. If you try to create an integer that cannot be represented in 64-bits (signed), we will throw a `RangeError`.
 
 ```js
 // These will each throw a RangeError
