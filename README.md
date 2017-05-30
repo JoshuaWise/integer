@@ -113,11 +113,11 @@ int.toString(16); // => '2000000040'
 
 ### Arithmetic operations
 
-#### &nbsp;&nbsp;&nbsp;&nbsp;.add/plus(*value*) -> *integer64*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.subtract/sub/minus(*value*) -> *integer64*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.multiply/mul/times(*value*) -> *integer64*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.divide/div/divideBy/dividedBy/over(*value*) -> *integer64*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.modulo/mod(*value*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.add/plus(*other*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.subtract/sub/minus(*other*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.multiply/mul/times(*other*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.divide/div/divideBy/dividedBy/over(*other*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.modulo/mod(*other*) -> *integer64*
 
 Performs the arithmetic operation and returns a new `integer64`. The argument must either be a number, a base-10 string, or an `integer64`. If the operation results in overflow, a `RangeError` is thrown.
 
@@ -131,9 +131,9 @@ Returns the absolute value of the `integer64`.
 
 ### Bitwise operations
 
-#### &nbsp;&nbsp;&nbsp;&nbsp;.and(*value*) -> *integer64*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.or(*value*) -> *integer64*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.xor(*value*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.and(*other*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.or(*other*) -> *integer64*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.xor(*other*) -> *integer64*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.not() -> *integer64*
 
 Performs the bitwise operation and returns a new `integer64`. The argument must either be a number, a base-10 string, or an `integer64`.
@@ -145,21 +145,21 @@ Shifts the `integer64` by specified number of bits and returns the result.
 
 ### Logical operations
 
-#### &nbsp;&nbsp;&nbsp;&nbsp;.equals/eq/isEqualTo(*value*) -> *boolean*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.notEquals/neq/isNotEqualTo/doesNotEqual(*value*) -> *boolean*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.greaterThan/gt/isGreaterThan(*value*) -> *boolean*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.lessThan/lt/isLessThan(*value*) -> *boolean*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.greaterThanOrEquals/gte/isGreaterThanOrEqualTo(*value*) -> *boolean*
-#### &nbsp;&nbsp;&nbsp;&nbsp;.lessThanOrEquals/lte/isLessThanOrEqualTo(*value*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.equals/eq/isEqualTo(*other*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.notEquals/neq/isNotEqualTo/doesNotEqual(*other*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.greaterThan/gt/isGreaterThan(*other*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.lessThan/lt/isLessThan(*other*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.greaterThanOrEquals/gte/isGreaterThanOrEqualTo(*other*) -> *boolean*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.lessThanOrEquals/lte/isLessThanOrEqualTo(*other*) -> *boolean*
 
 Performs the logical operation and returns `true` or `false`. The argument must either be a number, a base-10 string, or an `integer64`.
 
-#### &nbsp;&nbsp;&nbsp;&nbsp;.compare(*arg*) -> *number*
+#### &nbsp;&nbsp;&nbsp;&nbsp;.compare(*other*) -> *number*
 
 Compares the value of the `integer64` and the argument, resulting in:
-- `-1` if `this` is less than `arg`
-- `1` if `this` is greater than `arg`
-- `0` if `this` is equal to `arg`
+- `-1` if `this` is less than `other`
+- `1` if `this` is greater than `other`
+- `0` if `this` is equal to `other`
 
 ### Other utility
 
@@ -181,7 +181,7 @@ Int.fromString('4fffffffffff', 16).bitSizeAbs(); // => 47
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isZero() -> *boolean*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isNonZero/isNotZero() -> *boolean*
 
-Self-explanatory information about the `integer64's` value.
+Self-explanatory.
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isSafe() -> *boolean*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isUnsafe() -> *boolean*
