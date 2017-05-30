@@ -198,6 +198,26 @@ Returns the low or high 32-bits of the 64-bit integer.
 
 Determines if the given value is an `integer64`.
 
+#### Integer64.MAX_VALUE
+
+Maximum value of an `integer64`.
+
+#### Integer64.MIN_VALUE
+
+Minimum value of an `integer64`.
+
+#### Integer64.ZERO
+
+An `integer64` with a value of `0`.
+
+#### Integer64.ONE
+
+An `integer64` with a value of `1`.
+
+#### Integer64.NEG_ONE
+
+An `integer64` with a value of `-1`.
+
 ## Unwrapping the integer64
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toString([*radix*]) -> *string*
