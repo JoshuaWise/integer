@@ -93,9 +93,9 @@ Int.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0); // results in Int(0)
 
 ### Integer64.fromString(*string*, [*radix*, [*defaultValue*]]) -> *integer64*
 
-Converts a string to an `integer64`. The number is assumed to be [base 10](https://en.wikipedia.org/wiki/Radix) unless a different `radix` is specified.
+Casts a string to an `integer64`. The number is assumed to be [base 10](https://en.wikipedia.org/wiki/Radix) unless a different `radix` is specified.
 
-If the string cannot be converted the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
+If conversions fails the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
 var hexColor = 'ff55dd';
