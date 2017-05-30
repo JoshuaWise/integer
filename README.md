@@ -123,7 +123,7 @@ Performs the arithmetic operation and returns a new `integer64`. The argument mu
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.negate/neg() -> *integer64*
 
-Returns the unary negation (`-num`) of the `integer64`.
+Returns the unary negation (`-value`) of the `integer64`.
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.abs/absoluteValue() -> *integer64*
 
