@@ -68,7 +68,7 @@ var unsafe = int.toNumber();
 
 # API
 
-## Integer64(*value*) -> *integer64*
+### Integer64(*value*) -> *integer64*
 
 Casts a value to an `integer64`. If the value cannot be converted safely and losslessly, a `RangeError` is thrown.
 
@@ -80,7 +80,7 @@ assert(a.equals(0));
 assert(b.equals(c));
 ```
 
-### *static* Integer64.fromNumber(*number*, [*defaultValue*]) -> *integer64*
+### Integer64.fromNumber(*number*, [*defaultValue*]) -> *integer64*
 
 Casts a regular number to an `integer64`. If the number is outside the safe range, the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
@@ -89,7 +89,7 @@ var a = Int.fromNumber(12345, 0); // results in Int(12345)
 var b = Int.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0); // results in Int(0)
 ```
 
-### *static* Integer64.fromString(*string*, [*radix*, [*defaultValue*]]) -> *integer64*
+### Integer64.fromString(*string*, [*radix*, [*defaultValue*]]) -> *integer64*
 
 Converts a string to an `integer64`. The number is assumed to be [base 10](https://en.wikipedia.org/wiki/Radix) unless a different `radix` is specified. If the string cannot be converted the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
@@ -98,7 +98,7 @@ var hexColor = 'ff55dd';
 var int = Int.fromString(hexColor, 16, 'ffffff');
 ```
 
-### *static* Integer64.fromBits(*lowBits*, [*highBits*]) -> *integer64*
+### Integer64.fromBits(*lowBits*, [*highBits*]) -> *integer64*
 
 Creates an `integer64` by concatenating two 32-bit signed integers. The `highBits` are optional and default to `0`.
 
@@ -107,7 +107,7 @@ var int = Int.frombits(0x40, 0x20);
 int.toString(16); // => '2000000040'
 ```
 
-### *static* Integer64.isInteger64(*value*) -> *boolean*
+### Integer64.isInteger64(*value*) -> *boolean*
 
 Determines if the given value is an `integer64`.
 
