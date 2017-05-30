@@ -97,8 +97,8 @@ Casts a string to an `integer64`. The string is assumed to be [base-10](https://
 If conversions fails the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
-var hexColor = 'ff55dd';
-var int = Integer.fromString(hexColor, 16, Integer('ffffff'));
+var defaultValue = Integer.fromString('ff55dd', 16);
+var int = Integer.fromString(getHexString(), 16, defaultValue);
 ```
 
 ### Integer64.fromBits(*lowBits*, [*highBits*]) -> *integer64*
