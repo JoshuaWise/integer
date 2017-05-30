@@ -47,9 +47,9 @@ It's easy to convert between `integer64s` and regular JavaScript numbers.
 
 ```js
 var int = Int(12345);
-var num = +int; // same as int.toNumber()
-
 int instanceof Int; // => true
+
+var num = +int; // same as int.toNumber()
 typeof num === 'number'; // => true
 ```
 
