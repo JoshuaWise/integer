@@ -3,8 +3,8 @@
 Native 64-bit signed integers in Nodejs.
 
 - All standard operators (arithmetic, bitwise, logical)
-- Automatic protection from integer overflow
-- Automatic protection from converting to/from unsafe numbers
+- Protection from integer overflow
+- Protection from unsafe numbers
 - Always immutable
 - Other useful utilities
 
