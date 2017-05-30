@@ -201,13 +201,13 @@ Determines if the given value is an `integer64`.
 
 ## Unwrapping the integer64
 
-#### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
-
-Converts the `integer64` to a regular number. If the `integer64` is not within the safe range, a `RangeError` is thrown.
-
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toString([*radix*]) -> *string*
 
 Converts the `integer64` to a string. A base-10 string is returned unless a different `radix` is specified.
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
+
+Converts the `integer64` to a regular number. If the `integer64` is not within the safe range, a `RangeError` is thrown.
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
 
