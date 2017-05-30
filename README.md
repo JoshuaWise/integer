@@ -82,7 +82,7 @@ assert(b.equals(c));
 
 ### Integer64.fromNumber(*number*, [*defaultValue*]) -> *integer64*
 
-Casts a regular number to an `integer64`. If the number is outside the safe range, the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
+Casts a regular number to an `integer64`. If the number is an unsafe number the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
 var a = Int.fromNumber(12345, 0); // results in Int(12345)
