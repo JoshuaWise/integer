@@ -190,6 +190,17 @@ Returns whether or not the `integer64` is within the safe range. If it's not wit
 
 The safe range is defined as `n >= Number.MIN_SAFE_INTEGER && n <= Number.MAX_SAFE_INTEGER`.
 
+#### *get* .low -> *number*
+#### *get* .high -> *number*
+
+Returns the low or high 32-bits of the 64-bit integer.
+
+#### Integer64.isInteger64(*value*) -> *boolean*
+
+Determines if the given value is an `integer64`.
+
+## Unwrapping the integer64
+
 #### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
 
 Converts the `integer64` to a regular number. If the `integer64` is not within the safe range, a `RangeError` is thrown.
@@ -201,15 +212,6 @@ Converts the `integer64` to a string. A base-10 string is returned unless a diff
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
 
 Converts the `integer64` to a regular number, **even if the conversion would result in a loss of precision**. This method will never throw an error.
-
-#### *get* .low -> *number*
-#### *get* .high -> *number*
-
-Returns the low or high 32-bits of the 64-bit integer.
-
-#### Integer64.isInteger64(*value*) -> *boolean*
-
-Determines if the given value is an `integer64`.
 
 ## License
 
