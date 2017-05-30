@@ -111,7 +111,7 @@ var int = Int.frombits(0x40, 0x20);
 int.toString(16); // => '2000000040'
 ```
 
-### Integer64.isInteger64(*value*) -> *boolean*
+#### Integer64.isInteger64(*value*) -> *boolean*
 
 Determines if the given value is an `integer64`.
 
