@@ -37,7 +37,7 @@ var tooSmall = Int.MIN_VALUE.subtract(1);
 var divideByZero = Int(123).divide(0);
 var alsoTooBig = Int('4029384203948203948923');
 
-// I will also protect you against two's complement overflow, causing this to throw a RangeError
+// You are also protected against two's complement overflow (this will throw a RangeError)
 var twosComplement = Int.MIN_VALUE.divide(-1);
 ```
 
