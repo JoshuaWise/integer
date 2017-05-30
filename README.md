@@ -98,7 +98,7 @@ If conversions fails the `defaultValue` is used instead (or a `RangeError` is th
 
 ```js
 var hexColor = 'ff55dd';
-var int = Integer.fromString(hexColor, 16, 'ffffff');
+var int = Integer.fromString(hexColor, 16, Integer('ffffff'));
 ```
 
 ### Integer64.fromBits(*lowBits*, [*highBits*]) -> *integer64*
