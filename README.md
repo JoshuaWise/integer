@@ -156,7 +156,7 @@ Performs the logical operation and returns `true` or `false`. The argument must 
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.compare(*other*) -> *number*
 
-Compares the value of the `integer64` and the argument, resulting in:
+Compares the value of the `integer64` and `other`, resulting in:
 - `-1` if `this` is less than `other`
 - `1` if `this` is greater than `other`
 - `0` if `this` is equal to `other`
