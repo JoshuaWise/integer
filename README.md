@@ -111,7 +111,7 @@ var int = Int.frombits(0x40, 0x20);
 int.toString(16); // => '2000000040'
 ```
 
-### Arithmetic operations
+## Arithmetic operations
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.add/plus(*other*) -> *integer64*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.subtract/sub/minus(*other*) -> *integer64*
@@ -129,7 +129,7 @@ Returns the unary negation (`-value`) of the `integer64`.
 
 Returns the absolute value of the `integer64`.
 
-### Bitwise operations
+## Bitwise operations
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.and(*other*) -> *integer64*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.or(*other*) -> *integer64*
@@ -143,7 +143,7 @@ Performs the bitwise operation and returns a new `integer64`. The argument must 
 
 Shifts the `integer64` by specified number of bits and returns the result.
 
-### Logical operations
+## Logical operations
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.equals/eq/isEqualTo(*other*) -> *boolean*
 #### &nbsp;&nbsp;&nbsp;&nbsp;.notEquals/neq/isNotEqualTo/doesNotEqual(*other*) -> *boolean*
@@ -161,7 +161,7 @@ Compares the value of the `integer64` and the argument, resulting in:
 - `1` if `this` is greater than `other`
 - `0` if `this` is equal to `other`
 
-### Other utility
+## Other utility
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.bitSizeAbs() -> *number*
 
