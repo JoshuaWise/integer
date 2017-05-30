@@ -195,10 +195,8 @@ Determines if the given value is an `integer64`.
 
 #### Getters
 
-- **.low -> _number_**
-- **.high -> _number_**
-
-Returns the low or high 32-bits of the 64-bit integer.
+- **.low -> _number_** - the lower 32-bits of the 64-bit integer
+- **.high -> _number_** - the upper 32-bits of the 64-bit integer
 
 #### Constants
 
