@@ -16,9 +16,9 @@ npm install --save integer64
 ## Usage
 
 ```js
-var Int = require('integer64');
+var Integer = require('integer64');
 
-var a = Int('7129837312139827189');
+var a = Integer('7129837312139827189');
 var b = a.subtract(1).shiftRight(3);
 if (b.equals('891229664017478398')) {
   console.log(String(b)); // => '891229664017478398'
@@ -31,13 +31,13 @@ We will not let you perform operations that would result in integer overflow. If
 
 ```js
 // These will each throw a RangeError
-var tooBig = Int(13897283129).multiply(13897283129);
-var tooSmall = Int.MIN_VALUE.subtract(1);
-var divideByZero = Int(123).divide(0);
-var alsoTooBig = Int('4029384203948203948923');
+var tooBig = Integer(13897283129).multiply(13897283129);
+var tooSmall = Integer.MIN_VALUE.subtract(1);
+var divideByZero = Integer(123).divide(0);
+var alsoTooBig = Integer('4029384203948203948923');
 
 // You are also protected against two's complement overflow (this will throw a RangeError)
-var twosComplement = Int.MIN_VALUE.divide(-1);
+var twosComplement = Integer.MIN_VALUE.divide(-1);
 ```
 
 ## Unsafe number protection
@@ -45,8 +45,8 @@ var twosComplement = Int.MIN_VALUE.divide(-1);
 It's easy to convert between me and regular JavaScript numbers.
 
 ```js
-var int = Int(12345);
-assert(int instanceof Int);
+var int = Integer(12345);
+assert(int instanceof Integer);
 
 var num = +int; // same as int.toNumber()
 assert(typeof num === 'number');
@@ -56,10 +56,10 @@ However, we will prevent you from converting an `integer64` to an unsafe number,
 
 ```js
 // This will throw a RangeError
-var unsafe = Int(Number.MAX_SAFE_INTEGER + 1);
+var unsafe = Integer(Number.MAX_SAFE_INTEGER + 1);
 
 // This is okay
-var int = Int(Number.MAX_SAFE_INTEGER).plus(1);
+var int = Integer(Number.MAX_SAFE_INTEGER).plus(1);
 
 // But this will throw a RangeError
 var unsafe = int.toNumber();
@@ -72,9 +72,9 @@ var unsafe = int.toNumber();
 Casts a value to an `integer64`. If the value cannot be converted safely and losslessly, a `RangeError` is thrown.
 
 ```js
-var a = Int();
-var b = Int(12345);
-var c = Int('12345');
+var a = Integer();
+var b = Integer(12345);
+var c = Integer('12345');
 assert(a.equals(0));
 assert(b.equals(c));
 ```
@@ -86,8 +86,8 @@ Casts a regular number to an `integer64`.
 If the number is an unsafe number the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
-Int.fromNumber(12345, 0); // results in Int(12345)
-Int.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0); // results in Int(0)
+Integer.fromNumber(12345, 0); // results in Integer(12345)
+Integer.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0); // results in Integer(0)
 ```
 
 ### Integer64.fromString(*string*, [*radix*, [*defaultValue*]]) -> *integer64*
@@ -98,7 +98,7 @@ If conversions fails the `defaultValue` is used instead (or a `RangeError` is th
 
 ```js
 var hexColor = 'ff55dd';
-var int = Int.fromString(hexColor, 16, 'ffffff');
+var int = Integer.fromString(hexColor, 16, 'ffffff');
 ```
 
 ### Integer64.fromBits(*lowBits*, [*highBits*]) -> *integer64*
@@ -106,7 +106,7 @@ var int = Int.fromString(hexColor, 16, 'ffffff');
 Creates an `integer64` by concatenating two 32-bit signed integers. The `highBits` are optional and default to `0`.
 
 ```js
-var int = Int.frombits(0x40, 0x20);
+var int = Integer.frombits(0x40, 0x20);
 int.toString(16); // => '2000000040'
 ```
 
@@ -167,10 +167,10 @@ Compares the value of the `integer64` and `other`, resulting in:
 Returns the number of bits necessary to hold the absolute value of the `integer64`.
 
 ```js
-Int(0).bitSizeAbs(); // => 1
-Int(128).bitSizeAbs(); // => 8
-Int(-255).bitSizeAbs(); // => 8
-Int.fromString('4fffffffffff', 16).bitSizeAbs(); // => 47
+Integer(0).bitSizeAbs(); // => 1
+Integer(128).bitSizeAbs(); // => 8
+Integer(-255).bitSizeAbs(); // => 8
+Integer.fromString('4fffffffffff', 16).bitSizeAbs(); // => 47
 ```
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isEven() -> *boolean*
