@@ -202,14 +202,14 @@ Converts the `integer64` to a string. A base-10 string is returned unless a diff
 
 Converts the `integer64` to a regular number, even if the conversion would result in a loss of precision. This method will never throw an error.
 
-#### Integer64.isInteger64(*value*) -> *boolean*
-
-Determines if the given value is an `integer64`.
-
 #### *get* .low -> *number*
 #### *get* .high -> *number*
 
 Returns the low or high 32-bits of the 64-bit integer.
+
+#### Integer64.isInteger64(*value*) -> *boolean*
+
+Determines if the given value is an `integer64`.
 
 ## License
 
