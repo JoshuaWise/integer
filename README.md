@@ -160,7 +160,7 @@ Compares the value of the `integer64` and `other`, resulting in:
 - `1` if `this` is greater than `other`
 - `0` if `this` is equal to `other`
 
-## Unwrapping the integer64
+## Converting to other values
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toString([*radix*]) -> *string*
 
