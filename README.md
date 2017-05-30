@@ -160,6 +160,20 @@ Compares the value of the `integer64` and `other`, resulting in:
 - `1` if `this` is greater than `other`
 - `0` if `this` is equal to `other`
 
+## Unwrapping the integer64
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;.toString([*radix*]) -> *string*
+
+Converts the `integer64` to a string. A base-10 string is returned unless a different `radix` is specified.
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
+
+Converts the `integer64` to a regular number. If the `integer64` is not within the safe range, a `RangeError` is thrown.
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
+
+Converts the `integer64` to a regular number, **even if the conversion would result in a loss of precision**. This method will never throw an error.
+
 ## Other utility
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.bitSizeAbs() -> *number*
@@ -205,20 +219,6 @@ Determines if the given value is an `integer64`.
 - **Integer64.ZERO** - an `integer64` with a value of `0`
 - **Integer64.ONE** - an `integer64` with a value of `1`
 - **Integer64.NEG_ONE** - an `integer64` with a value of `-1`
-
-## Unwrapping the integer64
-
-#### &nbsp;&nbsp;&nbsp;&nbsp;.toString([*radix*]) -> *string*
-
-Converts the `integer64` to a string. A base-10 string is returned unless a different `radix` is specified.
-
-#### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
-
-Converts the `integer64` to a regular number. If the `integer64` is not within the safe range, a `RangeError` is thrown.
-
-#### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
-
-Converts the `integer64` to a regular number, **even if the conversion would result in a loss of precision**. This method will never throw an error.
 
 ## License
 
