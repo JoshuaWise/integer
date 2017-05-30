@@ -189,14 +189,18 @@ Returns whether or not the `integer64` is within the safe range. If it's not wit
 
 The safe range is defined as `n >= Number.MIN_SAFE_INTEGER && n <= Number.MAX_SAFE_INTEGER`.
 
-#### *get* .low -> *number*
-#### *get* .high -> *number*
 
-Returns the low or high 32-bits of the 64-bit integer.
 
 #### Integer64.isInteger64(*value*) -> *boolean*
 
 Determines if the given value is an `integer64`.
+
+#### Getters
+
+- ** .low -> *number* **
+- ** .high -> *number* **
+
+Returns the low or high 32-bits of the 64-bit integer.
 
 #### Constants
 
