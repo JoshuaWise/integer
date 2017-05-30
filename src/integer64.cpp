@@ -92,7 +92,10 @@ private:
 		Result cast = Cast(number);
 		if (!cast.error) return ReturnNew(info, cast.Checked());
 		if (info.Length() == 1) return ThrowException(info, *cast.error);
-		Result def = Cast(info, info[1]);
+		v8::Local<v8::Value> defValue = info[1];
+		if (HasInstance(info, defValue)) return info.GetReturnValue().Set(defValue);
+		if (!defValue->IsNumber()) return ThrowTypeError(info, "Expected the default value to be a number or Integer64");
+		Result def = Cast(v8::Local<v8::Number>::Cast(defValue));
 		if (!def.error) return ReturnNew(info, def.Checked());
 		ThrowTypeError(info, "The default value could not be converted to an Integer64");
 	}
@@ -107,7 +110,10 @@ private:
 		Result cast = Cast(string, (uint8_t)radix);
 		if (!cast.error) return ReturnNew(info, cast.Checked());
 		if (info.Length() < 3) return ThrowException(info, *cast.error);
-		Result def = Cast(info, info[2]);
+		v8::Local<v8::Value> defValue = info[2];
+		if (HasInstance(info, defValue)) return info.GetReturnValue().Set(defValue);
+		if (!defValue->IsString()) return ThrowTypeError(info, "Expected the default value to be a string or Integer64");
+		Result def = Cast(v8::Local<v8::String>::Cast(defValue), (uint8_t)radix);
 		if (!def.error) return ReturnNew(info, def.Checked());
 		ThrowTypeError(info, "The default value could not be converted to an Integer64");
 	}
