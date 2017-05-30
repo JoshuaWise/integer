@@ -113,11 +113,11 @@ int.toString(16); // => '2000000040'
 
 ### Arithmetic operations
 
-#### &nbsp; .add/plus(*value*) -> *integer64*
-#### .subtract/sub/minus(*value*) -> *integer64*
-#### .multiply/mul/times(*value*) -> *integer64*
-#### .divide/div/divideBy/dividedBy/over(*value*) -> *integer64*
-#### .modulo/mod(*value*) -> *integer64*
+#### &nbsp;&nbsp;.add/plus(*value*) -> *integer64*
+#### &nbsp;&nbsp;.subtract/sub/minus(*value*) -> *integer64*
+#### &nbsp;&nbsp;.multiply/mul/times(*value*) -> *integer64*
+#### &nbsp;&nbsp;.divide/div/divideBy/dividedBy/over(*value*) -> *integer64*
+#### &nbsp;&nbsp;.modulo/mod(*value*) -> *integer64*
 
 Performs the arithmetic operation and returns a new `integer64`. The argument must either be a number, a base-10 string, or an `integer64`. If the operation results in overflow, a `RangeError` is thrown.
 
