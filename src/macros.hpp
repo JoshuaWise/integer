@@ -34,7 +34,7 @@ void ThrowRangeError(NODE_ARGUMENTS info, const char* message) {ThrowException(i
 #define fourth() 3
 #define fifth() 4
 
-#define UseValue int64_t value = node::ObjectWrap::Unwrap<Integer64>(info.This())->value
+#define UseValue int64_t value = node::ObjectWrap::Unwrap<Integer>(info.This())->value
 #define UseArgument\
 	if (info.Length() == 0) return ThrowTypeError(info, "Missing argument");\
 	Result cast = Cast(info, info[0]);\

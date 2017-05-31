@@ -1,13 +1,13 @@
 var expect = require('chai').expect;
-var Integer64 = require('../.');
-var fromBits = Integer64.fromBits;
+var Integer = require('../.');
+var fromBits = Integer.fromBits;
 
 function equal(a, b) {
-	expect(a).to.be.an.instanceof(Integer64);
+	expect(a).to.be.an.instanceof(Integer);
 	expect(a.toString()).to.equal(b);
 }
 
-describe('Integer64.fromBits()', function () {
+describe('Integer.fromBits()', function () {
 	it('should work with one argument', function () {
 		// equal(fromNumber(0), 0);
 		// equal(fromNumber(123), 123);
@@ -31,6 +31,6 @@ describe('Integer64.fromBits()', function () {
 		// expect(function () {fromNumber([]);}).to.throw(TypeError);
 		// expect(function () {fromNumber(new Number(123));}).to.throw(TypeError);
 		// expect(function () {fromNumber('123');}).to.throw(TypeError);
-		// expect(function () {fromNumber(Integer64(123));}).to.throw(TypeError);
+		// expect(function () {fromNumber(Integer(123));}).to.throw(TypeError);
 	});
 });

@@ -1,13 +1,13 @@
 var expect = require('chai').expect;
-var Integer64 = require('../.');
-var fromNumber = Integer64.fromNumber;
+var Integer = require('../.');
+var fromNumber = Integer.fromNumber;
 
 function equal(a, b) {
-	expect(a).to.be.an.instanceof(Integer64);
+	expect(a).to.be.an.instanceof(Integer);
 	expect(a.toNumber()).to.equal(b);
 }
 
-describe('Integer64.fromNumber()', function () {
+describe('Integer.fromNumber()', function () {
 	it('should work with a number argument', function () {
 		equal(fromNumber(0), 0);
 		equal(fromNumber(123), 123);
@@ -23,7 +23,7 @@ describe('Integer64.fromNumber()', function () {
 		expect(function () {fromNumber([]);}).to.throw(TypeError);
 		expect(function () {fromNumber(new Number(123));}).to.throw(TypeError);
 		expect(function () {fromNumber('123');}).to.throw(TypeError);
-		expect(function () {fromNumber(Integer64(123));}).to.throw(TypeError);
+		expect(function () {fromNumber(Integer(123));}).to.throw(TypeError);
 	});
 	it('should throw when the argument is a non-integer number', function () {
 		expect(function () {fromNumber(0.1);}).to.throw(TypeError);
@@ -40,12 +40,12 @@ describe('Integer64.fromNumber()', function () {
 	it('should accept default values as an alternative to throwing exceptions', function () {
 		expect(function () {fromNumber(undefined, 0);}).to.throw(TypeError);
 		expect(function () {fromNumber('123', 0);}).to.throw(TypeError);
-		expect(function () {fromNumber(Integer64(123), 0);}).to.throw(TypeError);
+		expect(function () {fromNumber(Integer(123), 0);}).to.throw(TypeError);
 		equal(fromNumber(0.1, 123), 123);
-		equal(fromNumber(-0.1, Integer64(456)), 456);
+		equal(fromNumber(-0.1, Integer(456)), 456);
 		equal(fromNumber(Infinity, -2), -2);
-		equal(fromNumber(Number.MAX_SAFE_INTEGER + 1, Integer64(555)), 555);
-		expect(fromNumber(Number.MIN_SAFE_INTEGER - 1, Integer64.ONE)).to.equal(Integer64.ONE);
+		equal(fromNumber(Number.MAX_SAFE_INTEGER + 1, Integer(555)), 555);
+		expect(fromNumber(Number.MIN_SAFE_INTEGER - 1, Integer.ONE)).to.equal(Integer.ONE);
 	});
 	it('should throw when the default value is not valid', function () {
 		expect(function () {fromNumber(Number.MAX_SAFE_INTEGER + 1, '123');}).to.throw(TypeError);

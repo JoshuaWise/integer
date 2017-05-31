@@ -1,13 +1,13 @@
 var expect = require('chai').expect;
-var Integer64 = require('../.');
-var fromString = Integer64.fromString;
+var Integer = require('../.');
+var fromString = Integer.fromString;
 
 function equal(a, b) {
-	expect(a).to.be.an.instanceof(Integer64);
+	expect(a).to.be.an.instanceof(Integer);
 	expect(a.toString()).to.equal(b);
 }
 
-describe('Integer64.fromString()', function () {
+describe('Integer.fromString()', function () {
 	it('should work with a base-10 string argument', function () {
 		equal(fromString('0'), '0');
 		equal(fromString('123'), '123');
@@ -30,7 +30,7 @@ describe('Integer64.fromString()', function () {
 		expect(function () {fromString([]);}).to.throw(TypeError);
 		expect(function () {fromString(new String('123'));}).to.throw(TypeError);
 		expect(function () {fromString(123);}).to.throw(TypeError);
-		expect(function () {fromString(Integer64(123));}).to.throw(TypeError);
+		expect(function () {fromString(Integer(123));}).to.throw(TypeError);
 	});
 	it('should throw when the argument is a string with non-integer characters', function () {
 		expect(function () {fromString('a');}).to.throw(TypeError);
@@ -114,7 +114,7 @@ describe('Integer64.fromString()', function () {
 		expect(function () {fromString('0', {});}).to.throw(TypeError);
 		expect(function () {fromString('0', new Number(10));}).to.throw(TypeError);
 		expect(function () {fromString('0', '10');}).to.throw(TypeError);
-		expect(function () {fromString('0', Integer64(10));}).to.throw(TypeError);
+		expect(function () {fromString('0', Integer(10));}).to.throw(TypeError);
 		expect(function () {fromString('0', -1);}).to.throw(TypeError);
 		expect(function () {fromString('0', 0xffffffff + 10);}).to.throw(TypeError);
 		expect(function () {fromString('0', 0x7fffffff + 10);}).to.throw(RangeError);
@@ -122,13 +122,13 @@ describe('Integer64.fromString()', function () {
 	it('should accept default values as an alternative to throwing exceptions', function () {
 		expect(function () {fromString(undefined, 36, '0');}).to.throw(TypeError);
 		expect(function () {fromString(123, 36, '0');}).to.throw(TypeError);
-		expect(function () {fromString(Integer64(123), 36, '0');}).to.throw(TypeError);
+		expect(function () {fromString(Integer(123), 36, '0');}).to.throw(TypeError);
 		equal(fromString('a', 10, '123'), '123');
-		equal(fromString('5.0000000000000000000001', 36, Integer64(456)), '456');
+		equal(fromString('5.0000000000000000000001', 36, Integer(456)), '456');
 		equal(fromString('', 36, '-zz'), '-1295');
 		equal(fromString('2', 2, '10101'), '21');
-		equal(fromString('9223372036854775808', 10, Integer64(555)), '555');
-		expect(fromString('18446744073709551616', 10, Integer64.ONE)).to.equal(Integer64.ONE);
+		equal(fromString('9223372036854775808', 10, Integer(555)), '555');
+		expect(fromString('18446744073709551616', 10, Integer.ONE)).to.equal(Integer.ONE);
 	});
 	it('should throw when the default value is not valid', function () {
 		expect(function () {fromString('', 10, 123);}).to.throw(TypeError);

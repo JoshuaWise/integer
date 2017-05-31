@@ -1,6 +1,6 @@
-#include "integer64.hpp"
+#include "integer.hpp"
 
-class Integer64 : public node::ObjectWrap {
+class Integer : public node::ObjectWrap {
 public:
 	
 	static void Init(v8::Local<v8::Object> exports, v8::Local<v8::Object> module) {
@@ -10,7 +10,7 @@ public:
 		v8::Local<v8::FunctionTemplate> t = v8::FunctionTemplate::New(isolate, New);
 		t->InstanceTemplate()->SetInternalFieldCount(1);
 		t->PrototypeTemplate()->SetInternalFieldCount(1);
-		t->SetClassName(StringFromLatin1(isolate, "Integer64"));
+		t->SetClassName(StringFromLatin1(isolate, "Integer"));
 		
 		NODE_SET_PROTOTYPE_GETTER(t, "low", Low);
 		NODE_SET_PROTOTYPE_GETTER(t, "high", High);
@@ -49,7 +49,7 @@ public:
 		
 		v8::Local<v8::Function> c = t->GetFunction(isolate->GetCurrentContext()).ToLocalChecked();
 		v8::Local<v8::Object>::Cast(c->Get(isolate->GetCurrentContext(), StringFromLatin1(isolate, "prototype")).ToLocalChecked())->SetAlignedPointerInInternalField(0, &controller);
-		exports->Set(StringFromLatin1(isolate, "Integer64"), c);
+		exports->Set(StringFromLatin1(isolate, "Integer"), c);
 		
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromString", FromString);
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromNumber", FromNumber);
@@ -63,7 +63,7 @@ public:
 	}
 	
 private:
-	explicit Integer64(int64_t _value) : node::ObjectWrap(), value(_value) {}
+	explicit Integer(int64_t _value) : node::ObjectWrap(), value(_value) {}
 	
 	NODE_METHOD(New) {
 		if (info.IsConstructCall()) {
@@ -71,12 +71,12 @@ private:
 				return ThrowTypeError(info, "Disabled constructor (use fromString, fromNumber, or fromBits)");
 			}
 			controller.privileges = false;
-			(new Integer64(controller.value))->Wrap(info.This());
+			(new Integer(controller.value))->Wrap(info.This());
 			return info.GetReturnValue().Set(info.This());
 		}
 		if (info.Length() == 0) return ReturnNew(info, 0);
 		Result cast = Cast(info, info[0]);
-		// TODO: Ideally if info[0] is an Integer64, that same object is returned.
+		// TODO: Ideally if info[0] is an Integer, that same object is returned.
 		cast.error ? ThrowException(info, *cast.error) : ReturnNew(info, cast.Checked());
 	}
 	
@@ -95,10 +95,10 @@ private:
 		if (info.Length() == 1) return ThrowException(info, *cast.error);
 		v8::Local<v8::Value> defValue = info[1];
 		if (HasInstance(info, defValue)) return info.GetReturnValue().Set(defValue);
-		if (!defValue->IsNumber()) return ThrowTypeError(info, "Expected the default value to be a number or Integer64");
+		if (!defValue->IsNumber()) return ThrowTypeError(info, "Expected the default value to be a number or Integer");
 		Result def = Cast(v8::Local<v8::Number>::Cast(defValue));
 		if (!def.error) return ReturnNew(info, def.Checked());
-		ThrowTypeError(info, "The default value could not be converted to an Integer64");
+		ThrowTypeError(info, "The default value could not be converted to an Integer");
 	}
 	
 	NODE_METHOD(FromString) {
@@ -113,10 +113,10 @@ private:
 		if (info.Length() < 3) return ThrowException(info, *cast.error);
 		v8::Local<v8::Value> defValue = info[2];
 		if (HasInstance(info, defValue)) return info.GetReturnValue().Set(defValue);
-		if (!defValue->IsString()) return ThrowTypeError(info, "Expected the default value to be a string or Integer64");
+		if (!defValue->IsString()) return ThrowTypeError(info, "Expected the default value to be a string or Integer");
 		Result def = Cast(v8::Local<v8::String>::Cast(defValue), (uint8_t)radix);
 		if (!def.error) return ReturnNew(info, def.Checked());
-		ThrowTypeError(info, "The default value could not be converted to an Integer64");
+		ThrowTypeError(info, "The default value could not be converted to an Integer");
 	}
 	
 	NODE_METHOD(IsInstance) {
@@ -321,8 +321,8 @@ private:
 	static Result Cast(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
 		if (value->IsNumber()) return Cast(v8::Local<v8::Number>::Cast(value));
 		if (value->IsString()) return Cast(v8::Local<v8::String>::Cast(value), 10);
-		if (HasInstance(info, value)) return Result(node::ObjectWrap::Unwrap<Integer64>(v8::Local<v8::Object>::Cast(value))->value);
-		return Result("Expected a number, string, or Integer64");
+		if (HasInstance(info, value)) return Result(node::ObjectWrap::Unwrap<Integer>(v8::Local<v8::Object>::Cast(value))->value);
+		return Result("Expected a number, string, or Integer");
 	}
 	
 	static Result Cast(v8::Local<v8::Number> number) {
@@ -414,8 +414,8 @@ private:
 	const int64_t value;
 };
 
-v8::Persistent<v8::Function> Integer64::constructor;
-v8::Persistent<v8::FunctionTemplate> Integer64::constructorTemplate;
-Integer64::ConstructorController Integer64::controller;
+v8::Persistent<v8::Function> Integer::constructor;
+v8::Persistent<v8::FunctionTemplate> Integer::constructorTemplate;
+Integer::ConstructorController Integer::controller;
 
-NODE_MODULE(integer64, Integer64::Init);
+NODE_MODULE(integer, Integer::Init);
