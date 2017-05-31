@@ -1,5 +1,5 @@
 var Integer = module.exports = require('bindings')({
-	bindings: 'integer64.node',
+	bindings: 'integer.node',
 	module_root: __dirname
 }).Integer;
 
