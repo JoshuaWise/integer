@@ -76,6 +76,7 @@ private:
 		}
 		if (info.Length() == 0) return ReturnNew(info, 0);
 		Result cast = Cast(info, info[0]);
+		// TODO: Ideally if info[0] is an Integer64, that same object is returned.
 		cast.error ? ThrowException(info, *cast.error) : ReturnNew(info, cast.Checked());
 	}
 	
@@ -360,6 +361,10 @@ private:
 					uint64_t previous = value;
 					if (previous > (value = value * radix + (c - 87))) return Result("The given string represents a number that is too large", true);
 				} else {
+					if (c == 78 && ((i + 1 < len && !IsWhitespace(str[i + 1])) || (i != 0 && !IsWhitespace(str[i - 1]) && str[i - 1] != '-'))) {
+						// Skip zeros after a decimal point.
+						do {++i;} while (i<len && str[i] == '0');
+					}
 					break;
 				}
 			}
