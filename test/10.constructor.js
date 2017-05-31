@@ -38,14 +38,14 @@ describe('Integer64()', function () {
 		equal(Integer64('-.0'), 0);
 		equal(Integer64('-0.'), 0);
 	});
-	it('should work with an integer64 argument', function () {
+	it('should work with an Integer64 argument', function () {
 		equal(Integer64(Integer64()), 0);
 		equal(Integer64(Integer64(123)), 123);
 	});
 	it('should throw when the argument is an unaccepted type', function () {
 		expect(function () {Integer64(undefined);}).to.throw(TypeError);
 		expect(function () {Integer64(null);}).to.throw(TypeError);
-		expect(function () {Integer64({});}).to.throw(TypeError);
+		expect(function () {Integer64([]);}).to.throw(TypeError);
 		expect(function () {Integer64({low: 123, high: 123});}).to.throw(TypeError);
 		expect(function () {Integer64(Object.create(Integer64()));}).to.throw(TypeError);
 		expect(function () {Integer64(Object.create(Integer64.prototype));}).to.throw(TypeError);
@@ -81,10 +81,15 @@ describe('Integer64()', function () {
 		expect(function () {Integer64(' .p ');}).to.throw(TypeError);
 		expect(function () {Integer64(' -.. ');}).to.throw(TypeError);
 		expect(function () {Integer64('.-');}).to.throw(TypeError);
+		expect(function () {Integer64('Infinity');}).to.throw(TypeError);
 	});
 	it('should throw when the argument is a string of a number larger than 64 bits', function () {
 		expect(function () {Integer64('9223372036854775808');}).to.throw(RangeError);
 		expect(function () {Integer64('-9223372036854775809');}).to.throw(RangeError);
+		expect(function () {Integer64('18446744073709551614');}).to.throw(RangeError);
+		expect(function () {Integer64('18446744073709551616');}).to.throw(RangeError);
+		expect(function () {Integer64('340282366920938463463374607431768211454');}).to.throw(RangeError);
+		expect(function () {Integer64('340282366920938463463374607431768211456');}).to.throw(RangeError);
 	});
 	it('should accept valid strings with whitespace padding', function () {
 		equal(Integer64('   123    '), 123);
@@ -111,5 +116,7 @@ describe('Integer64()', function () {
 		expect(function () {Integer64('-. 0');}).to.throw(TypeError);
 		expect(function () {Integer64('-0 .');}).to.throw(TypeError);
 		expect(function () {Integer64('- 0.');}).to.throw(TypeError);
+		expect(function () {Integer64('');}).to.throw(TypeError);
+		expect(function () {Integer64('   \r\t ');}).to.throw(TypeError);
 	});
 });
