@@ -76,7 +76,7 @@ private:
 		}
 		if (info.Length() == 0) return ReturnNew(info, 0);
 		Result cast = Cast(info, info[0]);
-		// TODO: Ideally if info[0] is an Integer, that same object is returned.
+		// TODO: ideally if info[0] is an Integer, that same object is returned.
 		cast.error ? ThrowException(info, *cast.error) : ReturnNew(info, cast.Checked());
 	}
 	
