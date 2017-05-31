@@ -20,9 +20,9 @@ void ThrowRangeError(NODE_ARGUMENTS info, const char* message) {ThrowException(i
 	var = v8::Local<v8::Type>::Cast(info[at()])__VA_ARGS__
 
 #define REQUIRE_ARGUMENT_INT32(at, var)\
-	_REQUIRE_ARGUMENT(at, var, Int32, a 32-bit signed numeric integer, ->Value())
+	_REQUIRE_ARGUMENT(at, var, Int32, a regular 32-bit signed integer, ->Value())
 #define REQUIRE_ARGUMENT_UINT32(at, var)\
-	_REQUIRE_ARGUMENT(at, var, Uint32, a 32-bit unsigned numeric integer, ->Value())
+	_REQUIRE_ARGUMENT(at, var, Uint32, a regular 32-bit unsigned integer, ->Value())
 #define REQUIRE_ARGUMENT_NUMBER(at, var)\
 	_REQUIRE_ARGUMENT(at, var, Number, a number)
 #define REQUIRE_ARGUMENT_STRING(at, var)\
