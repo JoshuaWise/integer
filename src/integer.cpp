@@ -374,7 +374,7 @@ private:
 		
 		if (i != len) return Result("The given string contains non-integer characters");
 		if (value > I64_in_U64 + is_negative) return Result("The given string represents a number that is too large", true);
-		return Result(is_negative ? -((int64_t)(value - 1)) - 1 : (int64_t)value);
+		return Result((is_negative && value) ? -((int64_t)(value - 1)) - 1 : (int64_t)value);
 	}
 	
 	static char* WriteString(char* buffer, int64_t value, uint8_t radix) {
