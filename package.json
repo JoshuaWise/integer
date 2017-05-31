@@ -1,5 +1,5 @@
 {
-  "name": "integer64",
+  "name": "integer",
   "version": "0.1.0",
   "description": "Native 64-bit integers with overflow protection.",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/JoshuaWise/integer64.git"
+    "url": "git://github.com/JoshuaWise/integer.git"
   },
   "keywords": [
     "integer",
@@ -22,9 +22,9 @@
   "author": "Joshua Wise <joshuathomaswise@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JoshuaWise/integer64/issues"
+    "url": "https://github.com/JoshuaWise/integer/issues"
   },
-  "homepage": "https://github.com/JoshuaWise/integer64#readme",
+  "homepage": "https://github.com/JoshuaWise/integer#readme",
   "dependencies": {
     "bindings": "^1.2.1"
   },

@@ -53,7 +53,7 @@
   },
   "targets": [
     {
-      "target_name": "integer64",
+      "target_name": "integer",
       'cflags': [
         '-std=c++11'
       ],
@@ -64,7 +64,7 @@
         ],
       },
       "sources": [
-        "src/integer64.cpp"
+        "src/integer.cpp"
       ]
     }
   ]

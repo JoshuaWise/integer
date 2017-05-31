@@ -54,7 +54,7 @@ public:
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromString", FromString);
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromNumber", FromNumber);
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromBits", FromBits);
-		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "isInteger64", IsInteger64);
+		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "isInstance", IsInstance);
 		
 		constructor.Reset(isolate, c);
 		constructorTemplate.Reset(isolate, t);
@@ -119,7 +119,7 @@ private:
 		ThrowTypeError(info, "The default value could not be converted to an Integer64");
 	}
 	
-	NODE_METHOD(IsInteger64) {
+	NODE_METHOD(IsInstance) {
 		Return(info, info.Length() != 0 && HasInstance(info, info[0]));
 	}
 	

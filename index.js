@@ -1,17 +1,17 @@
-var Integer64 = module.exports = require('bindings')({
+var Integer = module.exports = require('bindings')({
 	bindings: 'integer64.node',
 	module_root: __dirname
-}).Integer64;
+}).Integer;
 
 
-defineStatic('MAX_VALUE', Integer64.fromBits(-1, 0x7fffffff));
-defineStatic('MIN_VALUE', Integer64.fromBits(0, -0x80000000));
-defineStatic('ZERO', Integer64.fromBits(0, 0));
-defineStatic('ONE', Integer64.fromBits(1, 0));
-defineStatic('NEG_ONE', Integer64.fromBits(-1, -1));
+defineStatic('MAX_VALUE', Integer.fromBits(-1, 0x7fffffff));
+defineStatic('MIN_VALUE', Integer.fromBits(0, -0x80000000));
+defineStatic('ZERO', Integer.fromBits(0, 0));
+defineStatic('ONE', Integer.fromBits(1, 0));
+defineStatic('NEG_ONE', Integer.fromBits(-1, -1));
 
 function defineStatic(key, value) {
-	Object.defineProperty(Integer64, key, {
+	Object.defineProperty(Integer, key, {
 		writable: false,
 		enumerable: true,
 		configurable: false,
@@ -20,9 +20,9 @@ function defineStatic(key, value) {
 }
 
 function alias(methodName, aliases) {
-	var method = Integer64.prototype[methodName];
+	var method = Integer.prototype[methodName];
 	if (typeof method !== 'function') throw new TypeError('Missing method');
-	aliases.forEach(function (name) {Integer64.prototype[name] = method;});
+	aliases.forEach(function (name) {Integer.prototype[name] = method;});
 }
 
 alias('add', ['plus']);
