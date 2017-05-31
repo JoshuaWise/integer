@@ -20,9 +20,7 @@ var Integer = require('integer')
 
 var a = Integer('7129837312139827189')
 var b = a.subtract(1).shiftRight(3)
-if (b.equals('891229664017478398')) {
-  console.log(String(b)) // => '891229664017478398'
-}
+assert(b.equals('891229664017478398'))
 ```
 
 ## Overflow protection
