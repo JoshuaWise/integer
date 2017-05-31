@@ -16,12 +16,12 @@ npm install --save integer
 ## Usage
 
 ```js
-var Integer = require('integer');
+var Integer = require('integer')
 
-var a = Integer('7129837312139827189');
-var b = a.subtract(1).shiftRight(3);
+var a = Integer('7129837312139827189')
+var b = a.subtract(1).shiftRight(3)
 if (b.equals('891229664017478398')) {
-  console.log(String(b)); // => '891229664017478398'
+  console.log(String(b)) // => '891229664017478398'
 }
 ```
 
@@ -31,13 +31,13 @@ We will not let you perform operations that would result in overflow. If you try
 
 ```js
 // These will each throw a RangeError
-var tooBig = Integer(13897283129).multiply(13897283129);
-var tooSmall = Integer.MIN_VALUE.subtract(1);
-var divideByZero = Integer(123).divide(0);
-var alsoTooBig = Integer('4029384203948203948923');
+var tooBig = Integer(13897283129).multiply(13897283129)
+var tooSmall = Integer.MIN_VALUE.subtract(1)
+var divideByZero = Integer(123).divide(0)
+var alsoTooBig = Integer('4029384203948203948923')
 
 // You are also protected against two's complement overflow (this will throw a RangeError)
-var twosComplement = Integer.MIN_VALUE.divide(-1);
+var twosComplement = Integer.MIN_VALUE.divide(-1)
 ```
 
 ## Unsafe number protection
@@ -45,24 +45,24 @@ var twosComplement = Integer.MIN_VALUE.divide(-1);
 It's easy to convert between me and regular JavaScript numbers.
 
 ```js
-var int = Integer(12345);
-assert(int instanceof Integer);
+var int = Integer(12345)
+assert(int instanceof Integer)
 
-var num = +int; // same as int.toNumber()
-assert(typeof num === 'number');
+var num = Number(int) // same as int.toNumber()
+assert(typeof num === 'number')
 ```
 
 However, we will prevent you from converting an `Integer` to an unsafe number, and vice-versa.
 
 ```js
 // This will throw a RangeError
-var unsafe = Integer(Number.MAX_SAFE_INTEGER + 1);
+var unsafe = Integer(Number.MAX_SAFE_INTEGER + 1)
 
 // This is okay
-var int = Integer(Number.MAX_SAFE_INTEGER).plus(1);
+var int = Integer(Number.MAX_SAFE_INTEGER).plus(1)
 
 // But this will throw a RangeError
-var unsafe = int.toNumber();
+var unsafe = int.toNumber()
 ```
 
 # API
@@ -72,11 +72,11 @@ var unsafe = int.toNumber();
 Casts a value to an `Integer`. If the value cannot be converted safely and losslessly, a `RangeError` is thrown.
 
 ```js
-var a = Integer();
-var b = Integer(12345);
-var c = Integer('12345');
-assert(a.equals(0));
-assert(b.equals(c));
+var a = Integer()
+var b = Integer(12345)
+var c = Integer('12345')
+assert(a.equals(0))
+assert(b.equals(c))
 ```
 
 ### Integer.fromNumber(*number*, [*defaultValue*]) -> *Integer*
@@ -86,8 +86,8 @@ Casts a regular number to an `Integer`.
 If the number is an unsafe number the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
-Integer.fromNumber(12345, 0); // results in Integer(12345)
-Integer.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0); // results in Integer(0)
+Integer.fromNumber(12345, 0) // results in Integer(12345)
+Integer.fromNumber(Number.MAX_SAFE_INTEGER + 1, 0) // results in Integer(0)
 ```
 
 ### Integer.fromString(*string*, [*radix*, [*defaultValue*]]) -> *Integer*
@@ -97,8 +97,8 @@ Casts a string to an `Integer`. The string is assumed to be [base-10](https://en
 If conversions fails the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
-var hexColor = 'ff55dd';
-var int = Integer.fromString(hexColor, 16, 'ffffff');
+var hexColor = 'ff55dd'
+var int = Integer.fromString(hexColor, 16, 'ffffff')
 ```
 
 ### Integer.fromBits(*lowBits*, [*highBits*]) -> *Integer*
@@ -106,8 +106,8 @@ var int = Integer.fromString(hexColor, 16, 'ffffff');
 Creates an `Integer` by concatenating two 32-bit signed numeric integers. The `highBits` are optional and default to `0`.
 
 ```js
-var int = Integer.frombits(0x40, 0x20);
-int.toString(16); // => '2000000040'
+var int = Integer.frombits(0x40, 0x20)
+int.toString(16) // => '2000000040'
 ```
 
 ## Arithmetic operations
@@ -166,9 +166,27 @@ Compares the value of the `Integer` and `other`, resulting in:
 
 Converts the `Integer` to a string. A base-10 string is returned unless a different `radix` is specified.
 
+The `toString()` method is a standard JavaScript interface that enables you to do things like:
+
+```js
+var int = Integer(12345)
+var str = String(int)
+assert(str === '12345')
+```
+
 #### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
 
 Converts the `Integer` to a regular number. If the `Integer` is not within the safe range, a `RangeError` is thrown.
+
+The `valueOf()` method is a standard JavaScript interface that enables you to do things like:
+
+```js
+var int = Integer(12345)
+var num1 = Number(int)
+var num2 = 0 + int
+assert(num1 === 12345)
+assert(num2 === 12345)
+```
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
 
@@ -181,10 +199,10 @@ Converts the `Integer` to a regular number, **even if the conversion would resul
 Returns the number of bits necessary to hold the absolute value of the `Integer`.
 
 ```js
-Integer(0).bitSizeAbs(); // => 1
-Integer(128).bitSizeAbs(); // => 8
-Integer(-255).bitSizeAbs(); // => 8
-Integer.fromString('4fffffffffff', 16).bitSizeAbs(); // => 47
+Integer(0).bitSizeAbs() // => 1
+Integer(128).bitSizeAbs() // => 8
+Integer(-255).bitSizeAbs() // => 8
+Integer.fromString('4fffffffffff', 16).bitSizeAbs() // => 47
 ```
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.isEven() -> *boolean*
