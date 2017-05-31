@@ -164,27 +164,9 @@ Compares the value of the `Integer` and `other`, resulting in:
 
 Converts the `Integer` to a string. A base-10 string is returned unless a different `radix` is specified.
 
-The `toString()` method is a standard JavaScript interface that enables you to do things like:
-
-```js
-var int = Integer(12345);
-var str = String(int);
-assert(str === '12345');
-```
-
 #### &nbsp;&nbsp;&nbsp;&nbsp;.valueOf/toNumber() -> *number*
 
 Converts the `Integer` to a regular number. If the `Integer` is not within the safe range, a `RangeError` is thrown.
-
-The `valueOf()` method is a standard JavaScript interface that enables you to do things like:
-
-```js
-var int = Integer(12345);
-var num1 = Number(int);
-var num2 = 0 + int;
-assert(num1 === 12345);
-assert(num2 === 12345);
-```
 
 #### &nbsp;&nbsp;&nbsp;&nbsp;.toNumberUnsafe() -> *number*
 
