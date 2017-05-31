@@ -349,7 +349,6 @@ private:
 		uint8_t max_alpha = radix > 10 ? (radix - 11 + 'a') : 0;
 		uint8_t min_alpha = radix > 10 ? 'a' : 255;
 		bool is_negative = (i + 1 < len) && (str[i] == '-') && !IsWhitespace(str[i + 1]);
-		int8_t sign = 1 - (is_negative * 2);
 		for (i+=is_negative; i<len; ++i) {
 			uint16_t c = str[i];
 			if (c >= '0' && c <= max_digit) {
@@ -375,7 +374,7 @@ private:
 		
 		if (i != len) return Result("The given string contains non-integer characters");
 		if (value > I64_in_U64 + is_negative) return Result("The given string represents a number that is too large", true);
-		return Result(((int64_t)value) * sign);
+		return Result(is_negative ? -((int64_t)(value - 1)) - 1 : (int64_t)value);
 	}
 	
 	static char* WriteString(char* buffer, int64_t value, uint8_t radix) {

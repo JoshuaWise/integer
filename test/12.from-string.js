@@ -22,6 +22,8 @@ describe('Integer.fromString()', function () {
 		equal(fromString('0.'), '0');
 		equal(fromString('-.0'), '0');
 		equal(fromString('-0.'), '0');
+		equal(fromString('9223372036854775807'), '9223372036854775807');
+		equal(fromString('-9223372036854775808'), '-9223372036854775808');
 	});
 	it('should throw when the argument is an unaccepted type', function () {
 		expect(function () {fromString();}).to.throw(TypeError);
