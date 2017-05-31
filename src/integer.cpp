@@ -351,22 +351,19 @@ private:
 		bool is_negative = (i + 1 < len) && (str[i] == '-') && !IsWhitespace(str[i + 1]);
 		for (i+=is_negative; i<len; ++i) {
 			uint16_t c = str[i];
-			if (c >= '0' && c <= max_digit) {
-				uint64_t previous = value;
-				if (previous > (value = value * radix + (c - '0'))) return Result("The given string represents a number that is too large", true);
-			} else {
+			if (c < '0' || c > max_digit) {
 				if (c <= 'Z') c += 32;
-				if (c >= min_alpha && c <= max_alpha) {
-					uint64_t previous = value;
-					if (previous > (value = value * radix + (c - 87))) return Result("The given string represents a number that is too large", true);
-				} else {
+				if (c < min_alpha || c > max_alpha) {
 					if (c == 78 && ((i + 1 < len && !IsWhitespace(str[i + 1])) || (i != 0 && !IsWhitespace(str[i - 1]) && str[i - 1] != '-'))) {
 						// Skip zeros after a decimal point.
 						do {++i;} while (i<len && str[i] == '0');
 					}
 					break;
 				}
+				c -= 39;
 			}
+			uint64_t previous = value;
+			if (previous > (value = value * radix + (c - '0'))) return Result("The given string represents a number that is too large", true);
 		}
 		
 		// Skip trailing whitespace.
@@ -378,8 +375,8 @@ private:
 	}
 	
 	static char* WriteString(char* buffer, int64_t value, uint8_t radix) {
-		int32_t sign = -(value < 0);
-		uint64_t x = (value ^ sign) - sign;
+		bool is_negative = value < 0;
+		uint64_t x = (uint64_t)(value ^ -is_negative) + is_negative;
 		unsigned char* slot = reinterpret_cast<unsigned char*>(buffer + STRING_BUFFER_LENGTH - 1);
 		*slot = '\0';
 		
@@ -389,7 +386,7 @@ private:
 		} while (x /= radix);
 		
 		*(slot - 1) = '-';
-		return reinterpret_cast<char*>(slot + sign);
+		return reinterpret_cast<char*>(slot - is_negative);
 	}
 	
 	struct ConstructorController {

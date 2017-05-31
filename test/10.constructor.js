@@ -25,8 +25,13 @@ describe('Integer()', function () {
 		equal(Integer(Number.MIN_SAFE_INTEGER), Number.MIN_SAFE_INTEGER);
 	});
 	it('should work with a base-10 string argument', function () {
+		equal(Integer('0'), 0);
 		equal(Integer('123'), 123);
 		equal(Integer('-123'), -123);
+		equal(Integer('1'), 1);
+		equal(Integer('2'), 2);
+		equal(Integer('-1'), -1);
+		equal(Integer('-2'), -2);
 		equal(Integer('0005'), 5);
 		equal(Integer('0000'), 0);
 		equal(Integer('-0000'), 0);

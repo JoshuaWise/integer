@@ -12,6 +12,10 @@ describe('Integer.fromString()', function () {
 		equal(fromString('0'), '0');
 		equal(fromString('123'), '123');
 		equal(fromString('-123'), '-123');
+		equal(fromString('1'), '1');
+		equal(fromString('2'), '2');
+		equal(fromString('-1'), '-1');
+		equal(fromString('-2'), '-2');
 		equal(fromString('0005'), '5');
 		equal(fromString('0000'), '0');
 		equal(fromString('-0000'), '0');
