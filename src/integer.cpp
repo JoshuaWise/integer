@@ -45,6 +45,7 @@ public:
 		NODE_SET_PROTOTYPE_METHOD(t, "isUnsafe", IsUnsafe);
 		NODE_SET_PROTOTYPE_METHOD(t, "toNumberUnsafe", ToNumberUnsafe);
 		NODE_SET_PROTOTYPE_METHOD(t, "toString", ToString);
+		NODE_SET_PROTOTYPE_METHOD(t, "toBitString", ToBitString);
 		NODE_SET_PROTOTYPE_METHOD(t, "valueOf", ValueOf);
 		
 		v8::Local<v8::Function> c = t->GetFunction(isolate->GetCurrentContext()).ToLocalChecked();
@@ -292,6 +293,15 @@ private:
 		info.GetReturnValue().Set(StringFromLatin1(info.GetIsolate(), WriteString(buffer, value, (uint8_t)radix)));
 	}
 	
+	NODE_METHOD(ToBitString) { UseValue;
+		char buffer[STRING_BUFFER_LENGTH];
+		for (int i=63; i>=0; --i) {
+			buffer[63 - i] = '0' + (bool)(value & (ONE_in_I64 << i));
+		}
+		buffer[64] = '\0';
+		info.GetReturnValue().Set(StringFromLatin1(info.GetIsolate(), buffer));
+	}
+	
 	NODE_METHOD(ValueOf) { UseValue;
 		if (value <= MAX_SAFE && value >= MIN_SAFE) return Return(info, (double)value);
 		char buffer[STRING_BUFFER_LENGTH];
@@ -402,6 +412,7 @@ private:
 	static constexpr double MIN_SAFE_DOUBLE = (double)MIN_SAFE;
 	static constexpr uint64_t I64_in_U64 = (uint64_t)MAX_VALUE;
 	static constexpr uint64_t U32_in_U64 = (uint64_t)0xffffffffLU;
+	static constexpr int64_t ONE_in_I64 = (int64_t)1;
 	static const size_t STRING_BUFFER_LENGTH = 72;
 	static v8::Persistent<v8::Function> constructor;
 	static v8::Persistent<v8::FunctionTemplate> constructorTemplate;
