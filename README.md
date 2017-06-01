@@ -50,7 +50,7 @@ var num = Number(int); // same as int.toNumber()
 assert(typeof num === 'number');
 ```
 
-However, we will prevent you from converting an `Integer` to an unsafe number, and vice-versa.
+However, we will prevent you from converting an `Integer` to an unsafe number, and vice-versa. [Read here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger) to learn more about unsafe numbers.
 
 ```js
 // This will throw a RangeError
