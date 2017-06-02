@@ -144,19 +144,10 @@ private:
 	}
 	
 	NODE_METHOD(Multiply) { UseValue; UseArgument;
-		if (value > 0) {
-			if (arg > 0) {
-				if (value > MAX_VALUE / arg) return ThrowRangeError(info, "Integer overflow");
-			} else {
-				if (arg < MIN_VALUE / value) return ThrowRangeError(info, "Integer overflow");
-			}
-		} else {
-			if (arg > 0) {
-				if (value < MIN_VALUE / arg) return ThrowRangeError(info, "Integer overflow");
-			} else {
-				if (value != 0 && arg < MAX_VALUE / value) return ThrowRangeError(info, "Integer overflow");
-			}
-		}
+		if (value > 0
+			? (arg > 0 ? value > MAX_VALUE / arg : arg < MIN_VALUE / value)
+			: (arg > 0 ? value < MIN_VALUE / arg : (value != 0 && arg < MAX_VALUE / value)))
+			return ThrowRangeError(info, "Integer overflow");
 		ReturnNew(info, value * arg);
 	}
 	

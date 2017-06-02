@@ -17,5 +17,7 @@ describe('Integer#toNumberUnsafe()', function () {
 		expect(small.subtract(1).toNumberUnsafe()).to.equal(Number.MIN_SAFE_INTEGER - 1);
 		expect(big.add(100).toNumberUnsafe()).to.equal(Number.MAX_SAFE_INTEGER + 101);
 		expect(small.subtract(100).toNumberUnsafe()).to.equal(Number.MIN_SAFE_INTEGER - 101);
+		expect(Integer('9223372036854775807').toNumberUnsafe()).to.equal(9223372036854776000);
+		expect(Integer('-9223372036854775808').toNumberUnsafe()).to.equal(-9223372036854776000);
 	});
 });
