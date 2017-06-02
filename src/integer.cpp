@@ -49,7 +49,7 @@ public:
 		
 		v8::Local<v8::Function> c = t->GetFunction(isolate->GetCurrentContext()).ToLocalChecked();
 		v8::Local<v8::Object>::Cast(c->Get(isolate->GetCurrentContext(), StringFromLatin1(isolate, "prototype")).ToLocalChecked())->SetAlignedPointerInInternalField(0, &controller);
-		exports->Set(StringFromLatin1(isolate, "Integer"), c);
+		exports->Set(isolate->GetCurrentContext(), StringFromLatin1(isolate, "Integer"), c).FromJust();
 		
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromString", FromString);
 		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromNumber", FromNumber);
