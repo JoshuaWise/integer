@@ -81,7 +81,7 @@ assert(b.equals(c));
 
 Casts a regular number to an `Integer`.
 
-If the number is an unsafe number the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
+If the number is unsafe the `defaultValue` is used instead (or a `RangeError` is thrown if no `defaultValue` was provided).
 
 ```js
 Integer.fromNumber(12345, 0); // results in Integer(12345)
