@@ -3,21 +3,11 @@ var Integer = module.exports = require('bindings')({
 	module_root: __dirname
 }).Integer;
 
-
-defineStatic('MAX_VALUE', Integer.fromBits(-1, 0x7fffffff));
-defineStatic('MIN_VALUE', Integer.fromBits(0, -0x80000000));
-defineStatic('ZERO', Integer.fromBits(0, 0));
-defineStatic('ONE', Integer.fromBits(1, 0));
-defineStatic('NEG_ONE', Integer.fromBits(-1, -1));
-
-function defineStatic(key, value) {
-	Object.defineProperty(Integer, key, {
-		writable: false,
-		enumerable: true,
-		configurable: false,
-		value: value
-	});
-}
+Integer.MAX_VALUE = Integer.fromBits(-1, 0x7fffffff);
+Integer.MIN_VALUE = Integer.fromBits(0, -0x80000000);
+Integer.ZERO = Integer.fromBits(0, 0);
+Integer.ONE = Integer.fromBits(1, 0);
+Integer.NEG_ONE = Integer.fromBits(-1, -1);
 
 function alias(methodName, aliases) {
 	var method = Integer.prototype[methodName];
