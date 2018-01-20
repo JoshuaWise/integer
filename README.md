@@ -1,4 +1,4 @@
-# integer [![Build Status](https://img.shields.io/travis/JoshuaWise/integer.svg)](https://travis-ci.org/JoshuaWise/integer)
+# integer [![Build Status](https://travis-ci.org/JoshuaWise/integer.svg?branch=master)](https://travis-ci.org/JoshuaWise/integer)
 
 Native 64-bit signed integers in Nodejs.
 
