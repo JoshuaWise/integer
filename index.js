@@ -11,6 +11,7 @@ defineStatic('ONE', Integer.fromBits(1, 0));
 defineStatic('NEG_ONE', Integer.fromBits(-1, -1));
 
 function defineStatic(key, value) {
+	if (Integer.hasOwnProperty(key)) return;
 	Object.defineProperty(Integer, key, {
 		writable: false,
 		enumerable: true,
