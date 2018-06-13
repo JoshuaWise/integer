@@ -4,7 +4,6 @@
   "description": "Native 64-bit integers with overflow protection.",
   "main": "index.js",
   "scripts": {
-    "install": "node tools/install",
     "test": "$(npm bin)/mocha --bail --timeout 1000 --slow 500"
   },
   "repository": {

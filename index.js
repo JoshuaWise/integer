@@ -1,3 +1,4 @@
+'use strict';
 var Integer = module.exports = require('bindings')({
 	bindings: 'integer.node',
 	module_root: __dirname

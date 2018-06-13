@@ -1,3 +1,4 @@
+'use strict';
 var expect = require('chai').expect;
 var Integer = require('../.');
 var fromNumber = Integer.fromNumber;
