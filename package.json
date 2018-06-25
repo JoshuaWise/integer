@@ -2,7 +2,7 @@
   "name": "integer",
   "version": "1.0.5",
   "description": "Native 64-bit integers with overflow protection.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "install-debug": "node-gyp rebuild --debug",
     "test": "$(npm bin)/mocha --bail --timeout 1000 --slow 500"
