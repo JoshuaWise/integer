@@ -108,13 +108,13 @@ private:
 			REQUIRE_ARGUMENT_UINT32(second, radix);
 			if (radix < 2 || radix > 36) return ThrowRangeError(info, "Radix argument must be within 2 - 36");
 		}
-		Result cast = Cast(string, (uint8_t)radix);
+		Result cast = Cast(info, string, (uint8_t)radix);
 		if (!cast.error) return ReturnNew(info, cast.Checked());
 		if (info.Length() < 3) return ThrowException(info, *cast.error);
 		v8::Local<v8::Value> defValue = info[2];
 		if (HasInstance(info, defValue)) return info.GetReturnValue().Set(defValue);
 		if (!defValue->IsString()) return ThrowTypeError(info, "Expected the default value to be a string or Integer");
-		Result def = Cast(v8::Local<v8::String>::Cast(defValue), (uint8_t)radix);
+		Result def = Cast(info, v8::Local<v8::String>::Cast(defValue), (uint8_t)radix);
 		if (!def.error) return ReturnNew(info, def.Checked());
 		ThrowTypeError(info, "The default value could not be converted to an Integer");
 	}
@@ -311,7 +311,7 @@ private:
 	
 	static Result Cast(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
 		if (value->IsNumber()) return Cast(v8::Local<v8::Number>::Cast(value));
-		if (value->IsString()) return Cast(v8::Local<v8::String>::Cast(value), 10);
+		if (value->IsString()) return Cast(info, v8::Local<v8::String>::Cast(value), 10);
 		if (HasInstance(info, value)) return Result(node::ObjectWrap::Unwrap<Integer>(v8::Local<v8::Object>::Cast(value))->value);
 		return Result("Expected a number, string, or Integer");
 	}
@@ -323,10 +323,10 @@ private:
 		return Result((int64_t)value);
 	}
 	
-	static Result Cast(v8::Local<v8::String> string, uint8_t radix) {
+	static Result Cast(NODE_ARGUMENTS info, v8::Local<v8::String> string, uint8_t radix) {
 		auto IsWhitespace = [](uint16_t c) { return c == ' ' || (c <= '\r' && c >= '\t'); };
 		
-		v8::String::Value utf16(string);
+		v8::String::Value utf16(info.GetIsolate(), string);
 		const uint16_t* str = *utf16;
 		int len = utf16.length();
 		int i = 0;
