@@ -2,70 +2,68 @@
   'target_defaults': {
     'default_configuration': 'Release',
     'msbuild_toolset': '',
+    'msvs_settings': {
+      'VCCLCompilerTool': {
+        'ExceptionHandling': 1,
+      },
+    },
     'configurations': {
       'Debug': {
         'defines!': [
-          'NDEBUG'
+          'NDEBUG',
         ],
-        'cflags_cc!': [
-          '-O3',
-          '-Os',
-          '-DNDEBUG'
+        'defines': [
+          'DEBUG',
+          '_DEBUG',
+        ],
+        'cflags': [
+          '-O0',
         ],
         'xcode_settings': {
           'MACOSX_DEPLOYMENT_TARGET': '10.7',
-          'OTHER_CPLUSPLUSFLAGS!': [
-            '-O3',
-            '-Os',
-            '-DDEBUG'
-          ],
           'GCC_OPTIMIZATION_LEVEL': '0',
-          'GCC_GENERATE_DEBUGGING_SYMBOLS': 'YES'
+          'GCC_GENERATE_DEBUGGING_SYMBOLS': 'YES',
         },
         'msvs_settings': {
-          'VCCLCompilerTool': {
-            'ExceptionHandling': 1
-          }
-        }
+          'VCLinkerTool': {
+            'GenerateDebugInformation': 'true',
+          },
+        },
       },
       'Release': {
+        'defines!': [
+          'DEBUG',
+          '_DEBUG',
+        ],
         'defines': [
-          'NDEBUG'
+          'NDEBUG',
+        ],
+        'cflags': [
+          '-O3',
         ],
         'xcode_settings': {
           'MACOSX_DEPLOYMENT_TARGET': '10.7',
-          'OTHER_CPLUSPLUSFLAGS!': [
-            '-Os',
-            '-O2'
-          ],
           'GCC_OPTIMIZATION_LEVEL': '3',
           'GCC_GENERATE_DEBUGGING_SYMBOLS': 'NO',
           'DEAD_CODE_STRIPPING': 'YES',
-          'GCC_INLINES_ARE_PRIVATE_EXTERN': 'YES'
+          'GCC_INLINES_ARE_PRIVATE_EXTERN': 'YES',
         },
-        'msvs_settings': {
-          'VCCLCompilerTool': {
-            'ExceptionHandling': 1
-          }
-        }
-      }
-    }
+      },
+    },
   },
-  "targets": [
+  'targets': [
     {
-      "target_name": "integer",
+      'target_name': 'integer',
+      'sources': ['src/integer.cpp'],
       'cflags': [
-        '-std=c++11'
+        '-std=c++11',
       ],
       'xcode_settings': {
         'OTHER_CPLUSPLUSFLAGS': [
           '-std=c++11',
-          '-stdlib=libc++'
+          '-stdlib=libc++',
         ],
       },
-      "sources": [
-        "src/integer.cpp"
-      ]
-    }
-  ]
+    },
+  ],
 }
