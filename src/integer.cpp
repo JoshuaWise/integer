@@ -84,7 +84,7 @@ private:
 		int32_t low;
 		int32_t high = 0;
 		REQUIRE_ARGUMENT_INT32(first, low);
-		if (info.Length() > 1) {REQUIRE_ARGUMENT_INT32(second, high);}
+		if (info.Length() > 1) { REQUIRE_ARGUMENT_INT32(second, high); }
 		ReturnNew(info, (int64_t)((((uint64_t)((uint32_t)high)) << 32) | (uint32_t)low));
 	}
 	
@@ -233,7 +233,7 @@ private:
 		}
 		uint64_t uvalue = (uint64_t)value;
 		uint32_t bits = 1;
-		while (uvalue >>= 1) {++bits;}
+		while (uvalue >>= 1) { ++bits; }
 		Return(info, bits);
 	}
 	
@@ -296,11 +296,11 @@ private:
 		return v8::Local<v8::FunctionTemplate>::New(info.GetIsolate(), constructorTemplate)->HasInstance(value);
 	}
 	
-	static inline void Return(NODE_GETTER_ARGUMENTS info, int32_t value) {info.GetReturnValue().Set(value);}
-	static inline void Return(NODE_ARGUMENTS info, int32_t value) {info.GetReturnValue().Set(value);}
-	static inline void Return(NODE_ARGUMENTS info, uint32_t value) {info.GetReturnValue().Set(value);}
-	static inline void Return(NODE_ARGUMENTS info, double value) {info.GetReturnValue().Set(value);}
-	static inline void Return(NODE_ARGUMENTS info, bool value) {info.GetReturnValue().Set(value);}
+	static inline void Return(NODE_GETTER_ARGUMENTS info, int32_t value) { info.GetReturnValue().Set(value); }
+	static inline void Return(NODE_ARGUMENTS info, int32_t value) { info.GetReturnValue().Set(value); }
+	static inline void Return(NODE_ARGUMENTS info, uint32_t value) { info.GetReturnValue().Set(value); }
+	static inline void Return(NODE_ARGUMENTS info, double value) { info.GetReturnValue().Set(value); }
+	static inline void Return(NODE_ARGUMENTS info, bool value) { info.GetReturnValue().Set(value); }
 	
 	static inline void ReturnNew(NODE_ARGUMENTS info, int64_t value) {
 		v8::Isolate* isolate = info.GetIsolate();
@@ -324,7 +324,7 @@ private:
 	}
 	
 	static Result Cast(v8::Local<v8::String> string, uint8_t radix) {
-		auto IsWhitespace = [](uint16_t c) {return c == ' ' || (c <= '\r' && c >= '\t');};
+		auto IsWhitespace = [](uint16_t c) { return c == ' ' || (c <= '\r' && c >= '\t'); };
 		
 		v8::String::Value utf16(string);
 		const uint16_t* str = *utf16;
@@ -332,7 +332,7 @@ private:
 		int i = 0;
 		
 		// Skip leading whitespace.
-		while (i<len && IsWhitespace(str[i])) {++i;}
+		while (i<len && IsWhitespace(str[i])) { ++i; }
 		if (i == len) return Result("The given string does not contain a number");
 		
 		uint64_t value = 0;
@@ -347,7 +347,7 @@ private:
 				if (c < min_alpha || c > max_alpha) {
 					if (c == 78 && ((i + 1 < len && !IsWhitespace(str[i + 1])) || (i != 0 && !IsWhitespace(str[i - 1]) && str[i - 1] != '-'))) {
 						// Skip zeros after a decimal point.
-						do {++i;} while (i<len && str[i] == '0');
+						do { ++i; } while (i<len && str[i] == '0');
 					}
 					break;
 				}
@@ -358,7 +358,7 @@ private:
 		}
 		
 		// Skip trailing whitespace.
-		while (i<len && IsWhitespace(str[i])) {++i;}
+		while (i<len && IsWhitespace(str[i])) { ++i; }
 		
 		if (i != len) return Result("The given string contains non-integer characters");
 		if (value > I64_in_U64 + is_negative) return Result("The given string represents a number that is too large", true);

@@ -11,8 +11,8 @@ class Result {
 public:
 	explicit Result(const char* message, bool range_error = false) : error(new Error(message, range_error)) {}
 	explicit Result(int64_t _value) : error(NULL), value(_value) {}
-	~Result() {delete error;}
-	inline int64_t Checked() {assert(error == NULL); return value;}
+	~Result() { delete error; }
+	inline int64_t Checked() { assert(error == NULL); return value; }
 	const Error* const error;
 private:
 	int64_t value;

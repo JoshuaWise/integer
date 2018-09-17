@@ -11,8 +11,8 @@ void ThrowException(NODE_ARGUMENTS info, Error error) {
 	v8::Isolate* isolate = info.GetIsolate();
 	isolate->ThrowException(error.Type(StringFromLatin1(isolate, error.message)));
 }
-void ThrowTypeError(NODE_ARGUMENTS info, const char* message) {ThrowException(info, Error(message, false));}
-void ThrowRangeError(NODE_ARGUMENTS info, const char* message) {ThrowException(info, Error(message, true));}
+void ThrowTypeError(NODE_ARGUMENTS info, const char* message) { ThrowException(info, Error(message, false)); }
+void ThrowRangeError(NODE_ARGUMENTS info, const char* message) { ThrowException(info, Error(message, true)); }
 
 #define _REQUIRE_ARGUMENT(at, var, Type, message, ...)\
 	if (info.Length() <= (at()) || !info[at()]->Is##Type())\
