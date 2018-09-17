@@ -1,6 +1,6 @@
 {
   "name": "integer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Native 64-bit integers with overflow protection.",
   "main": "lib/index.js",
   "scripts": {
