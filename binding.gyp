@@ -65,5 +65,14 @@
         ],
       },
     },
+    {
+      'target_name': 'place_resulting_binary',
+      'type': 'none',
+      'dependencies': ['integer'],
+      'copies': [{
+        'files': ['<(PRODUCT_DIR)/integer.node'],
+        'destination': 'build',
+      }],
+    },
   ],
 }
