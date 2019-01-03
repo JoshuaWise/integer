@@ -104,7 +104,7 @@ var int = Integer.fromString(hexColor, 16, 'ffffff');
 Creates an `Integer` by concatenating two regular 32-bit signed integers. The `highBits` are optional and default to `0`.
 
 ```js
-var int = Integer.frombits(0x40, 0x20);
+var int = Integer.fromBits(0x40, 0x20);
 int.toString(16); // => '2000000040'
 ```
 
