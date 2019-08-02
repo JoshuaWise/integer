@@ -16,7 +16,7 @@ void ThrowRangeError(NODE_ARGUMENTS info, const char* message) { ThrowException(
 
 #define _REQUIRE_ARGUMENT(at, var, Type, message, ...)\
 	if (info.Length() <= (at()) || !info[at()]->Is##Type())\
-		return ThrowTypeError(info, "Expected "#at" arguement to be "#message);\
+		return ThrowTypeError(info, "Expected "#at" argument to be "#message);\
 	var = v8::Local<v8::Type>::Cast(info[at()])__VA_ARGS__
 
 #define REQUIRE_ARGUMENT_INT32(at, var)\
