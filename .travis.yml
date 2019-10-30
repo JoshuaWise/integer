@@ -1,17 +1,35 @@
 language: node_js
 sudo: false
 node_js:
-- "8"
-- "9"
-- "10"
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.9
-    - g++-4.9
-before_install:
-- export CC="gcc-4.9" CXX="g++-4.9"
+- 'node'
+matrix:
+  include:
+    - os: linux
+      env: MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+      addons:
+        apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          packages:
+          - gcc-4.9
+          - g++-4.9
+    - os: osx
+      osx_image: xcode11
+      compiler: clang
+      env: MATRIX_EVAL="CC=gcc && CXX=g++"
 before_script:
 - npm run install-debug
+before_deploy:
+- npm install
+- npm run prebuild
+- npm run prebuild-electron
+deploy:
+  provider: releases
+  api_key:
+    secure: rwWWvPa2nhfDeDO5hSZr0O92u8/KnEzxzV3qagBmykvcAkw1iyfzio+T1T59B0mbz+ECph8CkZ0/BMEKT9Q5uoH4rr+fAOWUj4yAlC+hA22hJO8Ux/lbGEJmKFHsYzv8K7nFokn0aT0LihS2qhVweHMYpuhBYIjnyeSVbc0r2PgwyA4EUNRuams54B9iNmSogtqs5vSqGGfJA2wW4OBCqZ3bVK2g1EeGArvxQR2JG3e0mrVntXv0EiNJApiXxh3J2QIq7gyiiArpDVjY4GHHgDCgCzCMl9uNckBTjwHaDo18QJShIrTrRz/kbGmoiWlzvfdFSu9rkodliZr0ym/o0ly7If7isGYNhRxSHxdxIhIPjmBFoDKnCUO341MjCHHV1u1S/1fMCN9vDXItKWUG6pcKfCOOGnGldRSopmQJ8wWMZXQkacHvF5hokTuBt2yrTd8Snz4mHtNkVljuP/faU8YLo1U7BgoRY1gZ+RJzcwb+T9mA+499fE9GgiIqjntetJFDlv+RUtV0f3Ec9j5Y6hwyjXMdYqSUBoIkI+UUOUbiSSotcGnz7Je7bfr6DWgRjTy9edqMlOBcL7+ThhcdvOyjzmyMoNlQ6UP4q4DVr+Npdbm6aEC+NrFy88fF8VNXbrfpXuj8GhmVtksgY6rfQ6NeMOFbbu0AMXMkzF5BKjw=
+  file: prebuilds/*
+  file_glob: true
+  skip_cleanup: true
+  on:
+    repo: danielbarela/integer
+    tags: true
