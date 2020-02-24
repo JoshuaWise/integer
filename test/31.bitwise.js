@@ -58,7 +58,7 @@ describe('Bitwise operations', function () {
 			count += 1;
 		});
 		expect(count).to.equal(3);
-		
+
 		['shiftLeft', 'shiftRight'].forEach(function (method) {
 			specify('Integer#' + method + '()', function () {
 				var int = Integer(1);
