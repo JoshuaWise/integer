@@ -386,7 +386,7 @@ private:
 	};
 	
 	static const int64_t MAX_VALUE = 0x7fffffffffffffffLL;
-	static const int64_t MIN_VALUE = -0x8000000000000000LL;
+	static const int64_t MIN_VALUE = -0x7fffffffffffffffLL - 1 ;
 	static const int64_t MAX_SAFE = 9007199254740991LL;
 	static const int64_t MIN_SAFE = -9007199254740991LL;
 	static constexpr double MAX_SAFE_DOUBLE = (double)MAX_SAFE;
