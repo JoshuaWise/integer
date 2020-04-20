@@ -13,7 +13,7 @@ Native 64-bit signed integers in Node.js.
 npm install --save integer
 ```
 
-> You must be using Node.js v10 or above. Prebuilt binaries are only available for [LTS versions](https://nodejs.org/en/about/releases/).
+> You must be using Node.js v10 or above. Prebuilt binaries are available for [LTS versions](https://nodejs.org/en/about/releases/) + Linux/OSX.
 
 ## Usage
 
