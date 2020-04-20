@@ -1,6 +1,6 @@
 # integer [![Build Status](https://travis-ci.org/JoshuaWise/integer.svg?branch=master)](https://travis-ci.org/JoshuaWise/integer)
 
-Native 64-bit signed integers in Nodejs.
+Native 64-bit signed integers in Node.js.
 
 - All standard operators (arithmetic, bitwise, logical)
 - Protection from overflow and unsafe numbers
@@ -13,7 +13,7 @@ Native 64-bit signed integers in Nodejs.
 npm install --save integer
 ```
 
-> You must be using Nodejs v10 or above. Prebuilt binaries are only available for [LTS versions](https://nodejs.org/en/about/releases/).
+> You must be using Node.js v10 or above. Prebuilt binaries are only available for [LTS versions](https://nodejs.org/en/about/releases/).
 
 ## Usage
 
