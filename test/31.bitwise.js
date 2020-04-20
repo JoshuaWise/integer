@@ -1,6 +1,6 @@
 'use strict';
-var expect = require('chai').expect;
-var Integer = require('../.');
+const expect = require('chai').expect;
+const Integer = require('../.');
 
 function equal(a, b) {
 	expect(a).to.be.an.instanceof(Integer);
@@ -41,36 +41,36 @@ describe('Bitwise operations', function () {
 		equal(Integer('9223372036854775807').shiftRight(5), '288230376151711743');
 	});
 	describe('should throw when an invalid argument is provided', function () {
-		var count = 0;
-		['and', 'or', 'xor'].forEach(function (method) {
+		let count = 0;
+		['and', 'or', 'xor'].forEach((method) => {
 			specify('Integer#' + method + '()', function () {
-				var int = Integer(1);
-				expect(function () {int[method]();}).to.throw(TypeError);
-				expect(function () {int[method](undefined);}).to.throw(TypeError);
-				expect(function () {int[method](null);}).to.throw(TypeError);
-				expect(function () {int[method](new String('1'));}).to.throw(TypeError);
-				expect(function () {int[method](new Number(1));}).to.throw(TypeError);
-				expect(function () {int[method]([]);}).to.throw(TypeError);
-				expect(function () {int[method]({low: 1, high: 0});}).to.throw(TypeError);
-				expect(function () {int[method](Object.create(Integer(1)));}).to.throw(TypeError);
-				expect(function () {int[method](Object.create(Integer.prototype));}).to.throw(TypeError);
+				const int = Integer(1);
+				expect(() => int[method]()).to.throw(TypeError);
+				expect(() => int[method](undefined)).to.throw(TypeError);
+				expect(() => int[method](null)).to.throw(TypeError);
+				expect(() => int[method](new String('1'))).to.throw(TypeError);
+				expect(() => int[method](new Number(1))).to.throw(TypeError);
+				expect(() => int[method]([])).to.throw(TypeError);
+				expect(() => int[method]({low: 1, high: 0})).to.throw(TypeError);
+				expect(() => int[method](Object.create(Integer(1)))).to.throw(TypeError);
+				expect(() => int[method](Object.create(Integer.prototype))).to.throw(TypeError);
 			});
 			count += 1;
 		});
 		expect(count).to.equal(3);
 
-		['shiftLeft', 'shiftRight'].forEach(function (method) {
+		['shiftLeft', 'shiftRight'].forEach((method) => {
 			specify('Integer#' + method + '()', function () {
-				var int = Integer(1);
-				expect(function () {int[method]();}).to.throw(TypeError);
-				expect(function () {int[method](undefined);}).to.throw(TypeError);
-				expect(function () {int[method](null);}).to.throw(TypeError);
-				expect(function () {int[method]('1');}).to.throw(TypeError);
-				expect(function () {int[method](new Number(1));}).to.throw(TypeError);
-				expect(function () {int[method]([]);}).to.throw(TypeError);
-				expect(function () {int[method](Integer(1));}).to.throw(TypeError);
-				expect(function () {int[method](-1);}).to.throw(TypeError);
-				expect(function () {int[method](0x100000000);}).to.throw(TypeError);
+				const int = Integer(1);
+				expect(() => int[method]()).to.throw(TypeError);
+				expect(() => int[method](undefined)).to.throw(TypeError);
+				expect(() => int[method](null)).to.throw(TypeError);
+				expect(() => int[method]('1')).to.throw(TypeError);
+				expect(() => int[method](new Number(1))).to.throw(TypeError);
+				expect(() => int[method]([])).to.throw(TypeError);
+				expect(() => int[method](Integer(1))).to.throw(TypeError);
+				expect(() => int[method](-1)).to.throw(TypeError);
+				expect(() => int[method](0x100000000)).to.throw(TypeError);
 			});
 			count += 1;
 		});

@@ -1,6 +1,6 @@
 'use strict';
-var expect = require('chai').expect;
-var Integer = require('../.');
+const expect = require('chai').expect;
+const Integer = require('../.');
 
 describe('Integer#low and Integer#high', function () {
 	it('should return the lower 32 bits', function () {

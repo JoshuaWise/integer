@@ -1,6 +1,6 @@
 'use strict';
-var expect = require('chai').expect;
-var Integer = require('../.');
+const expect = require('chai').expect;
+const Integer = require('../.');
 
 describe('Logical operations', function () {
 	specify('Integer#equals()', function () {
@@ -39,19 +39,19 @@ describe('Logical operations', function () {
 		expect(Integer('-9223372036854775807').compare(Integer('-9223372036854775808'))).to.equal(1);
 	});
 	describe('should throw when an invalid argument is provided', function () {
-		var count = 0;
-		['equals', 'notEquals', 'greaterThan', 'lessThan', 'greaterThanOrEquals', 'lessThanOrEquals', 'compare'].forEach(function (method) {
+		let count = 0;
+		['equals', 'notEquals', 'greaterThan', 'lessThan', 'greaterThanOrEquals', 'lessThanOrEquals', 'compare'].forEach((method) => {
 			specify('Integer#' + method + '()', function () {
-				var int = Integer(1);
-				expect(function () {int[method]();}).to.throw(TypeError);
-				expect(function () {int[method](undefined);}).to.throw(TypeError);
-				expect(function () {int[method](null);}).to.throw(TypeError);
-				expect(function () {int[method](new String('1'));}).to.throw(TypeError);
-				expect(function () {int[method](new Number(1));}).to.throw(TypeError);
-				expect(function () {int[method]([]);}).to.throw(TypeError);
-				expect(function () {int[method]({low: 1, high: 0});}).to.throw(TypeError);
-				expect(function () {int[method](Object.create(Integer(1)));}).to.throw(TypeError);
-				expect(function () {int[method](Object.create(Integer.prototype));}).to.throw(TypeError);
+				const int = Integer(1);
+				expect(() => int[method]()).to.throw(TypeError);
+				expect(() => int[method](undefined)).to.throw(TypeError);
+				expect(() => int[method](null)).to.throw(TypeError);
+				expect(() => int[method](new String('1'))).to.throw(TypeError);
+				expect(() => int[method](new Number(1))).to.throw(TypeError);
+				expect(() => int[method]([])).to.throw(TypeError);
+				expect(() => int[method]({low: 1, high: 0})).to.throw(TypeError);
+				expect(() => int[method](Object.create(Integer(1)))).to.throw(TypeError);
+				expect(() => int[method](Object.create(Integer.prototype))).to.throw(TypeError);
 			});
 			count += 1;
 		});

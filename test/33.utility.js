@@ -1,6 +1,6 @@
 'use strict';
-var expect = require('chai').expect;
-var Integer = require('../.');
+const expect = require('chai').expect;
+const Integer = require('../.');
 
 describe('Utility', function () {
 	specify('Integer#bitSizeAbs()', function () {
@@ -86,13 +86,13 @@ describe('Utility', function () {
 		expect(Integer(Number.MIN_SAFE_INTEGER).add(-1).isUnsafe()).to.be.true;
 	});
 	specify('Integer.isInstance()', function () {
-		var isInstance = Integer.isInstance;
-		var copycat = Object.create(Integer.prototype);
-		['low', 'high'].forEach(function (name) {
+		const isInstance = Integer.isInstance;
+		const copycat = Object.create(Integer.prototype);
+		['low', 'high'].forEach((name) => {
 			Object.defineProperty(copycat, name, {
 				enumerable: true,
 				configurable: true,
-				get: function () {return 0;}
+				get: (() => 0),
 			});
 		});
 		expect(isInstance()).to.be.false;

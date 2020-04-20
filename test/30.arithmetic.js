@@ -1,6 +1,6 @@
 'use strict';
-var expect = require('chai').expect;
-var Integer = require('../.');
+const expect = require('chai').expect;
+const Integer = require('../.');
 
 function equal(a, b) {
 	expect(a).to.be.an.instanceof(Integer);
@@ -53,60 +53,60 @@ describe('Arithmetic operations', function () {
 	});
 	describe('should throw when overflow would occur', function () {
 		specify('Integer#add()', function () {
-			var big = Integer('9223372036854775807');
-			var small = Integer('-9223372036854775808');
-			expect(function () {big.add(1);}).to.throw(RangeError);
-			expect(function () {small.add(-1);}).to.throw(RangeError);
+			const big = Integer('9223372036854775807');
+			const small = Integer('-9223372036854775808');
+			expect(() => big.add(1)).to.throw(RangeError);
+			expect(() => small.add(-1)).to.throw(RangeError);
 		});
 		specify('Integer#subtract()', function () {
-			var big = Integer('9223372036854775807');
-			var small = Integer('-9223372036854775808');
-			expect(function () {big.subtract(-1);}).to.throw(RangeError);
-			expect(function () {small.subtract(1);}).to.throw(RangeError);
+			const big = Integer('9223372036854775807');
+			const small = Integer('-9223372036854775808');
+			expect(() => big.subtract(-1)).to.throw(RangeError);
+			expect(() => small.subtract(1)).to.throw(RangeError);
 		});
 		specify('Integer#multiply()', function () {
-			var big = Integer('4611686018427387904');
-			var bigger = Integer('4611686018427387905');
-			var small = Integer('-4611686018427387904');
-			var smaller = Integer('-4611686018427387905');
-			expect(function () {big.multiply(2);}).to.throw(RangeError);
-			expect(function () {bigger.multiply(-2);}).to.throw(RangeError);
-			expect(function () {small.multiply(-2);}).to.throw(RangeError);
-			expect(function () {smaller.multiply(2);}).to.throw(RangeError);
+			const big = Integer('4611686018427387904');
+			const bigger = Integer('4611686018427387905');
+			const small = Integer('-4611686018427387904');
+			const smaller = Integer('-4611686018427387905');
+			expect(() => big.multiply(2)).to.throw(RangeError);
+			expect(() => bigger.multiply(-2)).to.throw(RangeError);
+			expect(() => small.multiply(-2)).to.throw(RangeError);
+			expect(() => smaller.multiply(2)).to.throw(RangeError);
 		});
 		specify('Integer#divide()', function () {
-			var normal = Integer(123);
-			var small = Integer('-9223372036854775808');
-			expect(function () {normal.divide(0);}).to.throw(RangeError);
-			expect(function () {small.divide(-1);}).to.throw(RangeError);
+			const normal = Integer(123);
+			const small = Integer('-9223372036854775808');
+			expect(() => normal.divide(0)).to.throw(RangeError);
+			expect(() => small.divide(-1)).to.throw(RangeError);
 		});
 		specify('Integer#modulo()', function () {
-			var normal = Integer(123);
-			expect(function () {normal.modulo(0);}).to.throw(RangeError);
+			const normal = Integer(123);
+			expect(() => normal.modulo(0)).to.throw(RangeError);
 		});
 		specify('Integer#negate()', function () {
-			var small = Integer('-9223372036854775808');
-			expect(function () {small.negate();}).to.throw(RangeError);
+			const small = Integer('-9223372036854775808');
+			expect(() => small.negate()).to.throw(RangeError);
 		});
 		specify('Integer#abs()', function () {
-			var small = Integer('-9223372036854775808');
-			expect(function () {small.abs();}).to.throw(RangeError);
+			const small = Integer('-9223372036854775808');
+			expect(() => small.abs()).to.throw(RangeError);
 		});
 	});
 	describe('should throw when an invalid argument is provided', function () {
-		var count = 0;
-		['add', 'subtract', 'multiply', 'divide', 'modulo'].forEach(function (method) {
+		let count = 0;
+		['add', 'subtract', 'multiply', 'divide', 'modulo'].forEach((method) => {
 			specify('Integer#' + method + '()', function () {
-				var int = Integer(1);
-				expect(function () {int[method]();}).to.throw(TypeError);
-				expect(function () {int[method](undefined);}).to.throw(TypeError);
-				expect(function () {int[method](null);}).to.throw(TypeError);
-				expect(function () {int[method](new String('1'));}).to.throw(TypeError);
-				expect(function () {int[method](new Number(1));}).to.throw(TypeError);
-				expect(function () {int[method]([]);}).to.throw(TypeError);
-				expect(function () {int[method]({low: 1, high: 0});}).to.throw(TypeError);
-				expect(function () {int[method](Object.create(Integer(1)));}).to.throw(TypeError);
-				expect(function () {int[method](Object.create(Integer.prototype));}).to.throw(TypeError);
+				const int = Integer(1);
+				expect(() => int[method]()).to.throw(TypeError);
+				expect(() => int[method](undefined)).to.throw(TypeError);
+				expect(() => int[method](null)).to.throw(TypeError);
+				expect(() => int[method](new String('1'))).to.throw(TypeError);
+				expect(() => int[method](new Number(1))).to.throw(TypeError);
+				expect(() => int[method]([])).to.throw(TypeError);
+				expect(() => int[method]({low: 1, high: 0})).to.throw(TypeError);
+				expect(() => int[method](Object.create(Integer(1)))).to.throw(TypeError);
+				expect(() => int[method](Object.create(Integer.prototype))).to.throw(TypeError);
 			});
 			count += 1;
 		});

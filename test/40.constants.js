@@ -1,6 +1,6 @@
 'use strict';
-var expect = require('chai').expect;
-var Integer = require('../.');
+const expect = require('chai').expect;
+const Integer = require('../.');
 
 describe('Constants', function () {
 	specify('Integer.MAX_VALUE', function () {
@@ -9,8 +9,8 @@ describe('Constants', function () {
 		expect(Integer.MAX_VALUE.toString()).to.equal('9223372036854775807');
 		expect(Integer.MAX_VALUE.toString(2)).to.equal('111111111111111111111111111111111111111111111111111111111111111');
 		expect(Integer.MAX_VALUE.toString(36)).to.equal('1y2p0ij32e8e7');
-		expect(function () {Number(Integer.MAX_VALUE);}).to.throw(RangeError);
-		expect(function () {Integer.MAX_VALUE.toNumber();}).to.throw(RangeError);
+		expect(() => Number(Integer.MAX_VALUE)).to.throw(RangeError);
+		expect(() => Integer.MAX_VALUE.toNumber()).to.throw(RangeError);
 		expect(Integer.MAX_VALUE.toNumberUnsafe()).to.equal(9223372036854776000);
 		expect(Integer.MAX_VALUE.low).to.equal(-1);
 		expect(Integer.MAX_VALUE.high).to.equal(0x7fffffff);
@@ -25,8 +25,8 @@ describe('Constants', function () {
 		expect(Integer.MIN_VALUE.toString()).to.equal('-9223372036854775808');
 		expect(Integer.MIN_VALUE.toString(2)).to.equal('-1000000000000000000000000000000000000000000000000000000000000000');
 		expect(Integer.MIN_VALUE.toString(36)).to.equal('-1y2p0ij32e8e8');
-		expect(function () {Number(Integer.MIN_VALUE);}).to.throw(RangeError);
-		expect(function () {Integer.MIN_VALUE.toNumber();}).to.throw(RangeError);
+		expect(() => Number(Integer.MIN_VALUE)).to.throw(RangeError);
+		expect(() => Integer.MIN_VALUE.toNumber()).to.throw(RangeError);
 		expect(Integer.MIN_VALUE.toNumberUnsafe()).to.equal(-9223372036854776000);
 		expect(Integer.MIN_VALUE.low).to.equal(0);
 		expect(Integer.MIN_VALUE.high).to.equal(-0x80000000);
