@@ -13,8 +13,9 @@ Native 64-bit signed integers in Nodejs.
 npm install --save integer
 ```
 
-> `Integer` is only supported for nodejs v10.x.x and above
-> Prebuilt binaries are only available for [LTS versions](https://nodejs.org/en/about/releases/)
+> You must be using nodejs v10.x.x or newer.
+
+> Prebuilt binaries are only available for [LTS versions](https://nodejs.org/en/about/releases/).
 
 ## Usage
 
