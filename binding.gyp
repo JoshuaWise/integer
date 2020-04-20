@@ -54,7 +54,7 @@
   'targets': [
     {
       'target_name': 'integer',
-      'sources': ['src/integer.cpp'],
+      'sources': ['src/addon.cpp'],
       'cflags': [
         '-std=c++11',
       ],

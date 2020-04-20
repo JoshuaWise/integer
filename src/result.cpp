@@ -1,7 +1,8 @@
 typedef v8::Local<v8::Value> (*ErrorType)(v8::Local<v8::String>);
 
 struct Error {
-	explicit Error(const char* _message, bool range_error) : message(_message),
+	explicit Error(const char* _message, bool range_error) :
+		message(_message),
 		Type(range_error ? v8::Exception::RangeError : v8::Exception::TypeError) {}
 	const char* const message;
 	const ErrorType Type;

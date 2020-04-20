@@ -1,65 +1,47 @@
-#include "integer.hpp"
-
 class Integer : public node::ObjectWrap {
 public:
 
-	static void Init(v8::Local<v8::Object> exports, v8::Local<v8::Object> module) {
-		v8::Isolate* isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-
-		v8::Local<v8::FunctionTemplate> t = v8::FunctionTemplate::New(isolate, New);
-		t->InstanceTemplate()->SetInternalFieldCount(1);
-		t->PrototypeTemplate()->SetInternalFieldCount(1);
-		t->SetClassName(StringFromLatin1(isolate, "Integer"));
-
-		NODE_SET_PROTOTYPE_GETTER(t, "low", Low);
-		NODE_SET_PROTOTYPE_GETTER(t, "high", High);
-		NODE_SET_PROTOTYPE_METHOD(t, "add", Add);
-		NODE_SET_PROTOTYPE_METHOD(t, "subtract", Subtract);
-		NODE_SET_PROTOTYPE_METHOD(t, "multiply", Multiply);
-		NODE_SET_PROTOTYPE_METHOD(t, "divide", Divide);
-		NODE_SET_PROTOTYPE_METHOD(t, "modulo", Modulo);
-		NODE_SET_PROTOTYPE_METHOD(t, "negate", Negate);
-		NODE_SET_PROTOTYPE_METHOD(t, "abs", Abs);
-		NODE_SET_PROTOTYPE_METHOD(t, "and", And);
-		NODE_SET_PROTOTYPE_METHOD(t, "or", Or);
-		NODE_SET_PROTOTYPE_METHOD(t, "xor", Xor);
-		NODE_SET_PROTOTYPE_METHOD(t, "not", Not);
-		NODE_SET_PROTOTYPE_METHOD(t, "shiftLeft", ShiftLeft);
-		NODE_SET_PROTOTYPE_METHOD(t, "shiftRight", ShiftRight);
-		NODE_SET_PROTOTYPE_METHOD(t, "equals", Equals);
-		NODE_SET_PROTOTYPE_METHOD(t, "notEquals", NotEquals);
-		NODE_SET_PROTOTYPE_METHOD(t, "greaterThan", GreaterThan);
-		NODE_SET_PROTOTYPE_METHOD(t, "greaterThanOrEquals", GreaterThanOrEquals);
-		NODE_SET_PROTOTYPE_METHOD(t, "lessThan", LessThan);
-		NODE_SET_PROTOTYPE_METHOD(t, "lessThanOrEquals", LessThanOrEquals);
-		NODE_SET_PROTOTYPE_METHOD(t, "compare", Compare);
-		NODE_SET_PROTOTYPE_METHOD(t, "bitSizeAbs", BitSizeAbs);
-		NODE_SET_PROTOTYPE_METHOD(t, "isEven", IsEven);
-		NODE_SET_PROTOTYPE_METHOD(t, "isOdd", IsOdd);
-		NODE_SET_PROTOTYPE_METHOD(t, "isPositive", IsPositive);
-		NODE_SET_PROTOTYPE_METHOD(t, "isNegative", IsNegative);
-		NODE_SET_PROTOTYPE_METHOD(t, "isZero", IsZero);
-		NODE_SET_PROTOTYPE_METHOD(t, "isNonZero", IsNonZero);
-		NODE_SET_PROTOTYPE_METHOD(t, "isSafe", IsSafe);
-		NODE_SET_PROTOTYPE_METHOD(t, "isUnsafe", IsUnsafe);
-		NODE_SET_PROTOTYPE_METHOD(t, "toNumberUnsafe", ToNumberUnsafe);
-		NODE_SET_PROTOTYPE_METHOD(t, "toString", ToString);
-		NODE_SET_PROTOTYPE_METHOD(t, "valueOf", ValueOf);
-
-		v8::Local<v8::Function> c = t->GetFunction(isolate->GetCurrentContext()).ToLocalChecked();
-		v8::Local<v8::Object>::Cast(c->Get(isolate->GetCurrentContext(), StringFromLatin1(isolate, "prototype")).ToLocalChecked())->SetAlignedPointerInInternalField(0, &controller);
-		exports->Set(isolate->GetCurrentContext(), StringFromLatin1(isolate, "Integer"), c).FromJust();
-
-		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromString", FromString);
-		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromNumber", FromNumber);
-		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "fromBits", FromBits);
-		NODE_SET_METHOD(v8::Local<v8::Object>::Cast(c), "isInstance", IsInstance);
-
-		constructor.Reset(isolate, c);
-		constructorTemplate.Reset(isolate, t);
-		controller.privileges = false;
-		controller.value = 0;
+	static v8::Local<v8::FunctionTemplate> Init(v8::Isolate* isolate, v8::Local<v8::External> data) {
+		v8::Local<v8::FunctionTemplate> t = NewConstructorTemplate(isolate, data, New, "Integer");
+		SetPrototypeGetter(isolate, data, t, "low", Low);
+		SetPrototypeGetter(isolate, data, t, "high", High);
+		SetPrototypeMethod(isolate, data, t, "add", Add);
+		SetPrototypeMethod(isolate, data, t, "subtract", Subtract);
+		SetPrototypeMethod(isolate, data, t, "multiply", Multiply);
+		SetPrototypeMethod(isolate, data, t, "divide", Divide);
+		SetPrototypeMethod(isolate, data, t, "modulo", Modulo);
+		SetPrototypeMethod(isolate, data, t, "negate", Negate);
+		SetPrototypeMethod(isolate, data, t, "abs", Abs);
+		SetPrototypeMethod(isolate, data, t, "and", And);
+		SetPrototypeMethod(isolate, data, t, "or", Or);
+		SetPrototypeMethod(isolate, data, t, "xor", Xor);
+		SetPrototypeMethod(isolate, data, t, "not", Not);
+		SetPrototypeMethod(isolate, data, t, "shiftLeft", ShiftLeft);
+		SetPrototypeMethod(isolate, data, t, "shiftRight", ShiftRight);
+		SetPrototypeMethod(isolate, data, t, "equals", Equals);
+		SetPrototypeMethod(isolate, data, t, "notEquals", NotEquals);
+		SetPrototypeMethod(isolate, data, t, "greaterThan", GreaterThan);
+		SetPrototypeMethod(isolate, data, t, "greaterThanOrEquals", GreaterThanOrEquals);
+		SetPrototypeMethod(isolate, data, t, "lessThan", LessThan);
+		SetPrototypeMethod(isolate, data, t, "lessThanOrEquals", LessThanOrEquals);
+		SetPrototypeMethod(isolate, data, t, "compare", Compare);
+		SetPrototypeMethod(isolate, data, t, "bitSizeAbs", BitSizeAbs);
+		SetPrototypeMethod(isolate, data, t, "isEven", IsEven);
+		SetPrototypeMethod(isolate, data, t, "isOdd", IsOdd);
+		SetPrototypeMethod(isolate, data, t, "isPositive", IsPositive);
+		SetPrototypeMethod(isolate, data, t, "isNegative", IsNegative);
+		SetPrototypeMethod(isolate, data, t, "isZero", IsZero);
+		SetPrototypeMethod(isolate, data, t, "isNonZero", IsNonZero);
+		SetPrototypeMethod(isolate, data, t, "isSafe", IsSafe);
+		SetPrototypeMethod(isolate, data, t, "isUnsafe", IsUnsafe);
+		SetPrototypeMethod(isolate, data, t, "toNumberUnsafe", ToNumberUnsafe);
+		SetPrototypeMethod(isolate, data, t, "toString", ToString);
+		SetPrototypeMethod(isolate, data, t, "valueOf", ValueOf);
+		SetStaticMethod(isolate, data, t, "fromString", FromString);
+		SetStaticMethod(isolate, data, t, "fromNumber", FromNumber);
+		SetStaticMethod(isolate, data, t, "fromBits", FromBits);
+		SetStaticMethod(isolate, data, t, "isInstance", IsInstance);
+		return t;
 	}
 
 private:
@@ -67,11 +49,12 @@ private:
 
 	NODE_METHOD(New) {
 		if (info.IsConstructCall()) {
-			if (!controller.privileges) {
+			UseAddon;
+			if (!addon->controller.privileges) {
 				return ThrowTypeError(info, "Disabled constructor (use fromString, fromNumber, or fromBits)");
 			}
-			controller.privileges = false;
-			(new Integer(controller.value))->Wrap(info.This());
+			addon->controller.privileges = false;
+			(new Integer(addon->controller.value))->Wrap(info.This());
 			return info.GetReturnValue().Set(info.This());
 		}
 		if (info.Length() == 0) return ReturnNew(info, 0);
@@ -292,8 +275,8 @@ private:
 		ThrowRangeError(info, message.c_str());
 	}
 
-	static inline bool HasInstance(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
-		return v8::Local<v8::FunctionTemplate>::New(info.GetIsolate(), constructorTemplate)->HasInstance(value);
+	static inline bool HasInstance(NODE_ARGUMENTS info, v8::Local<v8::Value> value) { UseAddon;
+		return v8::Local<v8::FunctionTemplate>::New(info.GetIsolate(), addon->constructorTemplate)->HasInstance(value);
 	}
 
 	static inline void Return(NODE_GETTER_ARGUMENTS info, int32_t value) { info.GetReturnValue().Set(value); }
@@ -302,11 +285,11 @@ private:
 	static inline void Return(NODE_ARGUMENTS info, double value) { info.GetReturnValue().Set(value); }
 	static inline void Return(NODE_ARGUMENTS info, bool value) { info.GetReturnValue().Set(value); }
 
-	static inline void ReturnNew(NODE_ARGUMENTS info, int64_t value) {
+	static inline void ReturnNew(NODE_ARGUMENTS info, int64_t value) { UseAddon;
 		v8::Isolate* isolate = info.GetIsolate();
-		controller.privileges = true;
-		controller.value = value;
-		info.GetReturnValue().Set(v8::Local<v8::Function>::New(isolate, constructor)->NewInstance(isolate->GetCurrentContext()).ToLocalChecked());
+		addon->controller.privileges = true;
+		addon->controller.value = value;
+		info.GetReturnValue().Set(v8::Local<v8::Function>::New(isolate, addon->constructor)->NewInstance(isolate->GetCurrentContext()).ToLocalChecked());
 	}
 
 	static Result Cast(NODE_ARGUMENTS info, v8::Local<v8::Value> value) {
@@ -380,11 +363,6 @@ private:
 		return reinterpret_cast<char*>(slot - is_negative);
 	}
 
-	struct ConstructorController {
-		bool privileges;
-		int64_t value;
-	};
-
 	static const int64_t MAX_VALUE = 0x7fffffffffffffffLL;
 	static const int64_t MIN_VALUE = -0x7fffffffffffffffLL - 1LL;
 	static const int64_t MAX_SAFE = 9007199254740991LL;
@@ -394,15 +372,6 @@ private:
 	static constexpr uint64_t I64_in_U64 = (uint64_t)MAX_VALUE;
 	static constexpr uint64_t U32_in_U64 = (uint64_t)0xffffffffLU;
 	static const size_t STRING_BUFFER_LENGTH = 72;
-	static v8::Persistent<v8::Function> constructor;
-	static v8::Persistent<v8::FunctionTemplate> constructorTemplate;
-	static ConstructorController controller;
 
 	const int64_t value;
 };
-
-v8::Persistent<v8::Function> Integer::constructor;
-v8::Persistent<v8::FunctionTemplate> Integer::constructorTemplate;
-Integer::ConstructorController Integer::controller;
-
-NODE_MODULE(integer, Integer::Init);
