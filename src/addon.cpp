@@ -2,6 +2,7 @@
 #include <string>
 #include <node.h>
 #include <node_object_wrap.h>
+template <class T> using CopyablePersistent = v8::Persistent<T, v8::CopyablePersistentTraits<T>>;
 
 struct Addon {
 	CopyablePersistent<v8::Function> constructor;
