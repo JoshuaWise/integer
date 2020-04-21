@@ -309,7 +309,7 @@ private:
 	static Result Cast(NODE_ARGUMENTS info, v8::Local<v8::String> string, uint8_t radix) {
 		auto IsWhitespace = [](uint16_t c) { return c == ' ' || (c <= '\r' && c >= '\t'); };
 
-		v8::String::Value utf16(EXTRACT_STRING(info.GetIsolate(), string));
+		v8::String::Value utf16(info.GetIsolate(), string);
 		const uint16_t* str = *utf16;
 		int len = utf16.length();
 		int i = 0;

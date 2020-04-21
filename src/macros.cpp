@@ -37,13 +37,6 @@ void ThrowRangeError(NODE_ARGUMENTS info, const char* message) { ThrowException(
 #define fourth() 3
 #define fifth() 4
 
-#if defined(V8_MAJOR_VERSION) && (V8_MAJOR_VERSION > 6 ||\
-  (V8_MAJOR_VERSION == 6 && defined(V8_MINOR_VERSION) && V8_MINOR_VERSION >= 2))
-#define EXTRACT_STRING(isolate, string) isolate, string
-#else
-#define EXTRACT_STRING(_unused, string) string
-#endif
-
 #define UseAddon Addon* addon = static_cast<Addon*>(v8::Local<v8::External>::Cast(info.Data())->Value())
 #define UseValue int64_t value = node::ObjectWrap::Unwrap<Integer>(info.This())->value
 #define UseArgument\
