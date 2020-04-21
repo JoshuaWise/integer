@@ -101,3 +101,7 @@ void SetPrototypeGetter(
 		v8::AccessorSignature::New(isolate, recv)
 	);
 }
+
+#hdr
+template <class T> using CopyablePersistent = v8::Persistent<T, v8::CopyablePersistentTraits<T>>;
+#end

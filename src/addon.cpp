@@ -4,15 +4,12 @@
 #include <node_object_wrap.h>
 
 struct Addon {
-	v8::Persistent<v8::Function> constructor;
-	v8::Persistent<v8::FunctionTemplate> constructorTemplate;
+	CopyablePersistent<v8::Function> constructor;
+	CopyablePersistent<v8::FunctionTemplate> constructorTemplate;
 	struct { bool privileges; int64_t value; } controller;
 
 	static void Cleanup(void* ptr) {
-		Addon* addon = static_cast<Addon*>(ptr);
-		addon->constructor.Reset();
-		addon->constructorTemplate.Reset();
-		delete addon;
+		delete static_cast<Addon*>(ptr);
 	}
 };
 
